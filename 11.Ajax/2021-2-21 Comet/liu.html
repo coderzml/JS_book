@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button>点击</button>
+</body>
+
+</html>
+<script>
+  document.querySelector('button').onclick = function () {
+    function liu(url, old, _new) {
+      let xhr = new XMLHttpRequest();
+      let num = 0;
+      xhr.onreadystatechange = function () {
+        let result;
+        if (xhr.readyState == 3) {
+          // ————————————————————————
+          // 给我想象的不太一样，书上说 只要xhr.readyState = 3 就代表数据已经请求到了，但是可能不是最新的。而等于4的时候 才是最终结果，但是按此代码来看，php文件 只会一次性返回所有值，并不会一个一个的返回，这就造成了 不管readystate等于3还是4，old和——new只会执行一次。
+          // 应该实现的效果是 old函数 打印多次比如 12345-12345-12345，而new只打印一次 12345，这样就形成了事件流，在readyState等于3的时候 不断的更新新数据。
+          console.log(1);
+          result = xhr.responseText.substring(num);//123456789
+          num += result.length;//9
+          // 返回频繁请求的数据
+          old(result); // 123456789123456789123456789
+        } else if (xhr.readyState == 4) {
+          // 返回最后的数据
+          console.log(2);
+          _new(xhr.responseText);
+        }
+      }
+      xhr.open('get', url, true);
+      xhr.send(null);
+    }
+    liu('./data.php', function (old_data) {
+      console.log(old_data);
+    }, function (new_data) {
+      console.log(new_data);
+    });
+  };
+</script>

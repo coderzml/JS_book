@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+
+        div {
+            display: none;
+            width: 300px;
+            height: 300px;
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="300px" height="300px">您的浏览器不支持canvas绘图</canvas>
+    <div></div>
+</body>
+
+</html>
+<script>
+    let canvas = document.querySelector('canvas');
+    if (canvas.getContext) {
+        let ctx = canvas.getContext('2d');
+
+        // 二次贝塞尔曲线
+        function bs2() {
+            ctx.beginPath();
+            // 起始位置
+            ctx.moveTo(20, 150);
+            // 贝塞尔
+            ctx.quadraticCurveTo(80, 30, 250, 150);
+            // 画
+            ctx.stroke();
+            //  坐标（便于理解）
+            ctx.beginPath();
+            ctx.rect(20, 150, 10, 10);
+            ctx.rect(80, 30, 10, 10);
+            ctx.rect(250, 150, 10, 10);
+            ctx.fill();
+        }
+        bs2();
+
+
+    }
+    let div = document.querySelector('div');
+    function randomInt(from, to) {
+        return parseInt(Math.random() * (to - from + 1) + from);
+    }
+    div.style.background = 'rgb(' + randomInt(0, 255) + ',' + randomInt(0, 255) + ',' + randomInt(0, 255) + ')';
+</script>

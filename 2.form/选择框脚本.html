@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="#">
+        <select name="fruit" id="fruitList">
+            <option value="banana">香蕉</option>
+            <option value="pineapple">菠萝</option>
+            <option value="apple">苹果</option>
+            <option value="orange">橘子</option>
+        </select>
+    </form>
+</body>
+
+</html>
+<script>
+    let fruitBox = document.forms[0].elements[0];
+    console.log(fruitBox.options[1].selected);
+    // 如果得到选中的项
+    let obj = {
+        fruit: null
+    }
+    fruitBox.onchange = function () {
+        // 得到选中的索引
+        let selectIndex = fruitBox.selectedIndex;
+        console.log(selectIndex);
+        // 根据下标选中某一项
+        let item = fruitBox.options[selectIndex];
+        console.log(fruitBox.options[selectIndex]);
+        // 获取属性
+        console.log(item.text, item.value);
+        obj.fruit = item.value;
+        console.log(obj);
+
+    }
+    // 让谁默认选中
+    fruitBox.options[2].selected = true;
+</script>

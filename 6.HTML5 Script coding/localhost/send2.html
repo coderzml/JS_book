@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>自动打开弹出的窗口</p>
+</body>
+
+</html>
+<script>
+    window.onload = function () {
+        var windowObj = window.open('http://127.0.0.1:5500/localhost/receive-callback.html', 'open page');
+        windowObj.postMessage('hello', 'http://127.0.0.1:5500/localhost/receive-callback.html');
+        window.onmessage = function (event) {
+            alert(event.data);
+        }
+    }
+</script>

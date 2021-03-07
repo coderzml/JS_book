@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button>点击请求数据</button>
+</body>
+
+</html>
+<script>
+  let button = document.querySelector('button');
+  button.onclick = function () {
+    let xhr = new XMLHttpRequest();
+    // 因为监听事件要在open之前 所以就写在了这里
+    xhr.onreadystatechange = function () {
+      // 判断是否成功 最严谨的做法
+      if (xhr.readyState == 4) {
+        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+          // 这个时候如果数据请求到了 就在 responseText里面
+          console.log(xhr.responseText);
+          // 请求到了之后就可以处理数据了
+          let data = JSON.parse(xhr.responseText);
+          console.log(data);
+          let span = document.createElement('span');
+          span.innerHTML = data[0].name;
+          document.body.appendChild(span);
+        } else {
+          alert('request error');
+        }
+      }
+    }
+    // 请求头
+    xhr.open('get', 'data.json', true);
+    xhr.send(null);
+  }
+</script>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script src="./EventUtil.js"></script>
+<script>
+    EventUtil.addHandler(window, 'DOMContentLoaded', function () {
+        console.log('比load先执行');
+    })
+    EventUtil.addHandler(window, 'load', function () {
+        console.log('load执行');
+    });
+    // DOMContentLoaded  是在DOM树加载完毕后就会执行，不管CSS和IMG和JS好没好
+</script>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text">
+    <p>45456</p>
+</body>
+
+</html>
+<script src="../EventUtil.js"></script>
+<script>
+    let input = document.querySelector('input');
+    input.addEventListener('beforecopy', function (event) {
+        console.log('复制前');
+        let test = EventUtil.getClipboardText(event);
+        console.log(test);
+    });
+    // input.addEventListener('copy', function () {
+    //     console.log('复制时');
+    // });
+    EventUtil.addHandler(input, 'copy', function (event) {
+        event = EventUtil.getEvent(event);
+        // 1.获得复制的内容
+        let str = window.getSelection().toString();
+        // 如果没有复制 就不往下执行了
+        if (!str) { return false }
+        // 2.如果复制的有内容就设置剪切板的内容  注意阻止默认行为
+        if (str) {
+            EventUtil.preventDefault(event)
+            EventUtil.setClipboardText(event, str + '---coderzml');
+        }
+    });
+    input.addEventListener('beforecut', function () {
+        console.log('剪切前');
+    });
+    input.addEventListener('cut', function () {
+        console.log('剪切时');
+    });
+    // input.addEventListener('beforepaste', function () {
+    //     console.log('粘贴前');
+    //     // 没执行
+    // });
+    EventUtil.addHandler(input, 'beforepaste', function (event) {
+        event = EventUtil.getEvent(event);
+        // let test = EventUtil.getClipboardText(event);
+        // console.log(test);
+        // // 判断如果复制的不是数字就不让粘贴
+        // if (!/^\d*$/.test(test)) {
+        //     EventUtil.preventDefault(event);
+        // }
+        let test = EventUtil.getClipboardText(event);
+        console.log(test);
+        // let test = EventUtil.setClipboardText(event, '1223');
+        // console.log(test);
+    });
+    // input.addEventListener('paste', function () {
+    //     console.log('粘贴时');
+    // });
+    EventUtil.addHandler(input, 'paste', function (event) {
+        event = EventUtil.getEvent(event);
+        let test = EventUtil.getClipboardText(event);
+        console.log(test);
+        // 判断如果复制的不是数字就不让粘贴
+        if (!/^\d*$/.test(test)) {
+            EventUtil.preventDefault(event);
+        }
+    });
+</script>

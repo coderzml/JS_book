@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button>点击</button>
+</body>
+
+</html>
+<script>
+  document.querySelector('button').onclick = function () {
+    function liu(url, old, _new) {
+      let xhr = new XMLHttpRequest();
+      let source = new EventSource('./data.php');
+      // 要设置MIME类型 显然下面哪行代码是不对的，估计配置这些是在php文件内
+      // xhr.overrideMimeType('text/event-stream');
+      let num = 0;
+      // SSE 的三个事件
+      console.log(source);
+      source.onopen = function () {
+        console.log('建立连接');
+      }
+      source.onerror = function () {
+        console.log('连接失败');
+      }
+      source.onmessage = function (event) {
+        let data = event.data;
+        console.log(data);
+      }
+
+      xhr.onreadystatechange = function () {
+        let result;
+        if (xhr.readyState == 3) {
+          result = xhr.responseText.substring(num);//123456789
+          num += result.length;//9
+          // 返回频繁请求的数据
+          old(result); // 123456789123456789123456789
+        } else if (xhr.readyState == 4) {
+          // 返回最后的数据
+          console.log(2);
+          _new(xhr.responseText);
+        }
+      }
+      xhr.open('get', url, true);
+      xhr.send(null);
+    }
+    liu('./data.php', function (old_data) {
+      console.log(old_data);
+    }, function (new_data) {
+      console.log(new_data);
+    });
+  };
+</script>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="./1.css"> -->
+    <style>
+        .name4 {
+            color: red;
+        }
+
+        .color_toggle {
+            width: 500px;
+            height: 500px;
+
+        }
+
+        .color_toggle_red {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <span class="name1 name2 name3">123</span>
+        <input type="text">
+        <button>点击</button>
+    </div>
+    <div class="color_toggle color_toggle_red data-index=0"></div>
+    <p>自定义属性</p>
+    <button class="button2">点击</button>
+    <div class="box2">
+        <span>我是span</span>
+    </div>
+    <div class="box3"></div>
+</body>
+
+</html>
+<script>
+    let name = document.getElementsByClassName('name1')[0];
+    console.log(name);
+    // 删除第二个类名
+    // 这样删除会重置类名 如果有动态添加的类名则会造成不便
+    // name.className = 'name1 name2';
+    // console.log(name);
+    let names = name.className.split(' '); //将类名分割成数组
+    // 找到要删除的classname的位置
+    let pos;
+    for (let i = 0; i < names.length; i++) {
+        if (names[i] == 'name2') {
+            pos = i;
+            break;
+        }
+    }
+    console.log(pos);
+    // 删除class
+    names.splice(pos, 1);
+    console.log(names);
+    // 给处理后的结果再传给DOM元素  注意class是以空格分开，不是逗号
+    name.className = names.join(' ');
+    // HTML5新增的class操作方法（直接代替className只用）
+    // 删除类名
+    name.classList.remove('name3');
+    // 添加类名
+    name.classList.add('name2');
+    // 判断是否存在指定了类名
+    if (name.classList.contains('name2')) {
+        console.log('name2存在');
+    } else {
+        console.log('name2不存在');
+    }
+    //切换类(如果有就取消 如果没有就添加)
+    let button = document.querySelector('button');
+    button.addEventListener('click', () => {
+        name.index = 0;
+        name.classList.toggle('name4');
+        console.log(name.index);
+
+    })
+    // 很简单的实现复杂的功能
+    let toggle1 = document.querySelector('.color_toggle');
+    let that = toggle1;
+    let input = document.querySelector('input');
+    toggle1.addEventListener('mouseover', () => {
+        that.classList.toggle('color_toggle_red');
+        // input.focus();
+        console.log(document.hasFocus());
+
+    })
+    console.log(document.readyState);
+    if (document.readyState == 'completa') {
+        console.log('加载完毕');
+    }
+
+    function DOM2() {
+        let button2 = document.querySelector('.button2');
+        button2.dataset.index = 2;
+        console.log(button2.dataset.index);
+        let box = document.querySelector('.box2');
+        let str = '<p>我是p</p>'
+        // 这样的方式会让box的内容重绘
+        // box.innerHTML = str;
+        // 当前元素的父元素前面插入
+        // box.insertAdjacentHTML('beforebegin', str);
+        // 当前元素的父元素的后面插入
+        // box.insertAdjacentHTML('afterend', str);
+        // 当前元素的最前面插入
+        // box.insertAdjacentHTML('afterbegin', str);
+        // 当前元素的最后面插入
+        box.insertAdjacentHTML('beforeend', str);
+    }
+    DOM2();
+    // 使用innerHTML要避免频繁赋值
+    function inner() {
+        let time1 = +new Date();
+        let box3 = document.querySelector('.box3');
+        let str = '';
+        for (let i = 0; i < 500; i++) {
+            // box3.innerHTML += "<p>" + i + "</p>";
+            str += "<p>" + i + "</p>";
+        }
+        box3.innerHTML = str;
+        let time2 = +new Date();
+        console.log(time2 - time1);
+        // document.forms[0].scrollIntoView(true);
+        let box = document.querySelector('.box');
+        console.log(box.children);
+        console.log(box.children[1]);
+        console.log(box.childNodes);
+        console.log(box.childNodes[1]);
+
+        // document.body.scrollByLines(5);
+        box.style.backgroundColor = 'red';
+        box.style.width = '1000px';
+        console.log(box.style.backgroundColor);
+        console.log(box.style.width);
+        //获取标签的CSS样式
+        console.log(box.style.cssText);
+        // 获取标签设置样式的数量
+        console.log(box.style.length);
+        // console.log(getPropertypriority(box));
+        // console.log(removeProperty(box));
+        // cssText替代style使用
+        box.style.backgroundColor = 'red';
+        box.style.width = '1000px';
+        box.style.cssText = 'height:60px;color:yellow;background-color:pink';
+        // 有了css的length属性就可以迭代出css样式  但只是属性名
+        for (let i = 0; i < box.style.length; i++) {
+            console.log(box.style[i]);
+        }
+        // 得到属性值
+        console.log(box.style.getPropertyValue('height'));
+        // 迭代属性名和属性值
+        let pop;
+        let value;
+        for (let i = 0; i < box.style.length; i++) {
+            pop = box.style[i];
+            value = box.style.getPropertyValue(pop);
+            console.log(pop + value);
+        }
+        box.style.removeProperty('height');
+        console.log(document.querySelector('link').sheet);
+
+    }
+    inner();
+</script>

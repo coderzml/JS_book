@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box1 {
+            width: 200px;
+            height: 200px;
+            background: pink;
+        }
+
+        .end {
+            width: 500px;
+            height: 500px;
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box1" draggable="true"></div>
+    <div class="end"></div>
+</body>
+
+</html>
+<script>
+    // drag element
+    let box1 = document.querySelector('.box1');
+    box1.ondragstart = function (event) {
+        console.log('拖动开始');
+        // 设置接收文本数据
+        event.dataTransfer.setData('text', 'hello');
+        // let data = event.dataTransfer.getData('text');
+        // 设置接收图像数据
+        // event.dataTransfer.setData('URL', 'http://coderzml/img/1.png');
+        // let data = event.dataTransfer.getData('URL');
+        //兼容火狐老版本
+        // let url = event.dataTransfer.getData('url') || event.dataTransfer.getData('text/uri-list');
+        // let text = event.dataTransfer.getData('Text');
+
+        // 设置允许行为
+        event.dataTransfer.effectAllowed = 'all';
+    }
+    box1.ondrag = function () {
+        console.log('拖动过程中');
+
+    }
+    box1.ondragend = function () {
+        console.log('拖动结束');
+
+    }
+    box1.onclick = function () {
+        console.log(2);
+
+    }
+    // target element
+    let end = document.querySelector('.end');
+    end.ondragenter = function (event) {
+        console.log('拖放到目标元素');
+        event.preventDefault();
+
+        // 设置放置行为
+        event.dataTransfer.dropEffect = 'move';
+        console.log(event.dataTransfer);
+
+    }
+    end.ondragover = function () {
+        console.log('拖放元素在可放置目标内移动');
+        event.preventDefault();
+    }
+    end.ondragleave = function () {
+        console.log('拖放元素划出可放置范围');
+
+    }
+    end.ondrop = function (event) {
+        console.log('下降');
+        event.preventDefault();
+        // 获取拖动开始时设置的数据
+        let data = event.dataTransfer.getData('text');
+        console.log(data);
+
+    }
+</script>

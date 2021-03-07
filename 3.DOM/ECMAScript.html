@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <a href="https://www.baidu.com" target="topFrame"></a> -->
+</body>
+
+</html>
+<script>
+    function old() {
+        let message;
+        console.log(message == undefined);
+        console.log(null == undefined);
+        let string = '我是String类型';
+        console.log(Boolean(string));
+        let a = 0.05, b = 0.25;
+        if (a + b == 0.3) {
+            console.log('you got 0.3');
+        } else {
+            console.log('通不过测试');
+
+        }
+        // 字符串与字符串是不能进行比较的 如果比 比的也是字符比那吗 unicode
+        console.log('23' < '3');
+        let i = 0;
+        do {
+            i += 2;
+        } while (i <= 10);
+        console.log(i);
+
+        let c = 0;
+        let count = 10;
+        while (c < count) {
+            c++;
+            // alert(c);
+        }
+        c = 0;
+        for (; c < count;) {
+            c++;
+            // alert(c);
+        }
+
+        let obj = {
+            name: "zml",
+            age: "18",
+            heiget: "1.88"
+        }
+        for (let list in obj) {
+            console.log(list);
+            console.log(obj[list]);
+        }
+        let locations = {
+            peopel: {
+                name: 'zml',
+                age: "18"
+            }
+        }
+
+
+        with (locations) {
+            let peopelName = peopel.name;
+            let peopelAge = peopel.age;
+            console.log(peopelName, peopelAge);
+        }
+
+        function names() {
+            // console.log(arguments.length);
+            if (arguments.length == 1) {
+                console.log(arguments[0] + 10);
+            } else if (arguments.length == 2) {
+                console.log(arguments[0] + arguments[1]);
+            }
+        }
+        names(1, 2, 3);
+        names(1, 2);
+        names(1);
+        function test1(params, params2) {
+            console.log(params2);
+        }
+        test1(10)
+        let obj2 = {};
+        obj2.name = 'zml';
+        console.log(obj2);
+
+
+        let num1 = 5;
+        let num2 = num1;
+        num1 = 10;
+        console.log(num2);
+
+        let arr = [];
+        console.log(Array.isArray(arr));
+
+        let arr1 = [1, 2, 3, 4];
+        // console.log(arr1.join('@'))
+        let count1 = arr1.push(5);
+        console.log(count1);
+        console.log(arr1);
+        arr1.pop();
+        console.log(arr1);
+
+        // let arr3 = [2, 3, 1, 4, 52, 99, 63];
+        let arr3 = ['arr', 'bule', 'deep', 'ceil']
+        arr3.sort().reverse();
+        // arr3.sort((a, b) => b - a);
+        // arr3.sort(function (a, b) {
+        //     return a - b;
+        // })
+        console.log(arr3);
+
+    }
+
+
+
+    function arr(params) {
+        let colors = ['red', 'blue', 'yellow'];
+        let colors2 = ['pink', 'black', 'skyblue'];
+        console.log(colors.concat(colors2));
+        console.log(colors.indexOf('yellow'));
+
+        // 数组的五个迭代方法 every，filter，forEach，map，some
+        // every 只有全true才会返回true  相当于 && 并且
+        let arr = [11, 2, 3, 1, 1, 1, 3, 4, 4, 1, 1, 34, 4, 4];
+        let result = arr.every(function (item, index, array) {
+            return item > 0;
+        })
+        // console.log(result);
+        // some 只要有一个true就返回true  相当于 ||  或者
+        let result2 = arr.some(function (item, index, arr) {
+            return item > 0
+        })
+        // console.log(result2);
+        // filter 过滤器  返回满足条件的元素
+        let result3 = arr.filter(function (item, index, arr) {
+            return item > 2;
+        })
+        // console.log(result3);
+        // map 也返回一个数组 而返回的这个数组的每一项都是在原始数组上运行函数过后的结果
+        let result4 = arr.map(function (item, index, arr) {
+            return item * 2;
+        })
+        // console.log(result4);
+        // forEach  可以看作是 for循环的升级版  没有返回值
+        arr.forEach(function (item, index, arr) {
+            // for循环的升级版
+        })
+        // reduce 求和 四个参数  （上一个值，当前值，下标，数组本身）
+        let result5 = arr.reduce(function (prev, cur, index, arr) {
+            return prev + cur;
+        })
+        console.log(result5);
+    }
+    // arr();
+    function timer() {
+        // 输入一个未来时间转毫秒数
+        // let now = new Date(28 / 10 / 2020);
+        // let now = new Date(2020, 9, 28, 15, 55, 55);
+        // 获取当前时间距离1970的毫秒数
+        // 声明时间函数
+        let now = new Date();
+        let start = +new Date();
+        // 获取距离未来时间的毫秒数 格式 英文月份 日期，年份
+        let timer = Date.parse('October 28,2020');
+        // let timer = new Date(2020, 10, 28, 9, 41, 00);
+        // console.log(timer - start);
+        let result = timer - start;
+        console.log(result / 365 / 30 / 24 / 60);
+    }
+    // timer();
+    function regexp() {
+        let str = 'zhangmenglong';
+        // console.log(str);
+        // 匹配第一个 bat 或 cat 不区分大小写
+        let patern1 = /[bc]at/i;
+    }
+    // regexp();
+    function fun() {
+        let f = new Function('num1', 'num2', 'return num1+num2');
+        // console.log(f(1, 2));
+
+        // function add(num) {
+        //     return num + 100;
+        // }
+        // function add(num) {
+        //     return num + 200;
+        // }
+        // let result = add(100);
+        // console.log(result);
+        // 上面代码代表 function没有重载 
+        // 上面代码也等同于
+        let add = function (num) {
+            return num + 100;
+        }
+        add = function (num) {
+            return num + 200;
+        }
+        let result = add(100);
+        console.log(result);
+        console.log(one(10, 10));
+        // let one = function (num1, num2) {
+        //     return num1 + num2;
+        // }
+        function one(num1, num2) {
+            return num1 + num2;
+        }
+        window.color = 'red';
+        let o = { color: "blue" };
+        function getColor() {
+            console.log(this.color);
+
+        }
+        getColor();
+        getColor.apply(o);
+        let result6 = getColor.bind(o);
+        result6();
+        // bind 方法 会返回一个函数 执行这个函数才会执行bind方法
+        // apply方法的第一个参数 是 指针作用域 第二个是传入函数内的参数 可以使用 argument全部传入到函数内 也可以使用数组的方法 把参数传到函数内
+        // call方法 的第一个参数 同上  但是第二个参数 传值的时候 必须一个个枚举出来 不能用argument和数组的方式
+        // 在不传值的情况下 使用apply和call都大差不差 ，传值的时候 可以考虑 那个方便用哪个，多了用apply少了用call
+        // 其实传值并不是apply和call的真正用武之地，改变函数赖以生存的作用域 才是apply和call重要的地方 
+    }
+    // fun();
+    //数据类型
+    function baseType() {
+        // let flag = new Boolean(false);
+        // console.log(flag && true);
+        // let flag2 = false;
+        // console.log(flag2 && true);
+        // let str = ['zml', 'wqq', 'wxm', 'wlt', 'zml'];
+        let url = 'https://www.baidu.com/all/1.index';
+        console.log(encodeURI(url));
+        console.log(encodeURIComponent(url));
+        let str = encodeURIComponent(url);
+        console.log(decodeURIComponent(str));
+        console.log(Math.PI);
+        // let arr = [1, 2, 4, 3, 4, 234, 324, 23, 4];
+        // console.log(Math.max.apply(Math, arr));
+        // console.log(Math.floor(Math.random() * 10 + 1));
+        let arr = ['zml', 'wqq', 'wxm', 'wlt', 'qqq'];
+        let random = Math.floor(Math.random() * arr.length + 1)
+        console.log(random);
+        console.log(arr[random - 1]);
+
+        let user = {
+            age: 18,
+            add: 1,
+        }
+        Object.defineProperty(user, "age", {
+            get: function () {
+                return this.age;
+            },
+            set: function (newValue) {
+                if (newValue > 18) {
+                    this.add += newValue - 18
+                }
+            }
+        });
+        user.age = 19;
+        console.log(user.add);
+        // 工厂模式
+        function createPerson(name, age, sex) {
+            this.name = name;
+            this.age = age;
+            this.sex = sex;
+            this.add = function () {
+                return 1 + 1;
+            }
+        }
+        console.log(createPerson('zml', '18', 'man'));
+
+        function CreatePerson2(name, age) {
+            this.name = name;
+            this.age = age;
+            this.sayName = function () {
+                console.log(this.name);
+
+            }
+        }
+        let result = new CreatePerson2('zml', 18);
+        console.log(result.name);
+        // window.sayName(); 
+        let o = {};
+        CreatePerson2.call(o, 'zwqqq', '17');
+        o.sayName();
+        // 构造函数与普通函数的唯一区别就是用 new关键字调用，不存在定义构造函数的特殊语法
+        function Test2(name, age) {
+            this.name = name;
+            this.age = age;
+            this.add = function (params) {
+                console.log('1');
+
+            }
+        }
+        // 构造函数调用
+        let result2 = new Test2('zml', 19);
+        console.log(result2);
+        // 用普通函数调用
+        Test2('zml', 18);
+        window.add();
+        // 在另一个对象作用域中调用
+        let obj = {};
+        Test2.call(obj, 'wqq', 17);
+        console.log(obj);
+    }
+    // baseType();
+    // 面向对象
+    function faceObj() {
+        function Person(name, age) {
+            this.name = name;
+            this.age = age;
+            this.sayName = sayName;
+        }
+        function Person2(name, age) {
+            this.name = name;
+            this.age = age;
+            this.sayName = sayName;
+        }
+        function sayName() {
+            console.log(this.name);
+        }
+        let result = new Person('zml', 18);
+        result.sayName();
+        let result2 = new Person2('wqq', 17);
+        result2.sayName();
+
+        // 原型 prototype  使用原型可以使作用域达到顶峰
+        // 用原型给构造函数添加属性
+        function Proto() { };
+        Proto.prototype.name = 'zml';
+        Proto.prototype.age = '18';
+        Proto.prototype.sayAge = function () {
+            console.log(this);
+            console.log(this.age);
+        };
+        let result3 = new Proto();
+        let result4 = new Proto();
+        console.log(result3.name);
+        console.log(result4.name);
+        // 这里重写实例对象的name属性
+        result3.name = 'wqq';
+        // 影响
+        console.log(result3.name);
+        // 不影响  
+        console.log(result4.name);
+        // delete操作符可以删除实例对象的属性  然后就恢复了原型中的属性
+        delete result3.name;
+        console.log(result3.name);
+        console.log(result4.name);
+
+        // 利用 hasOwnProperty  和 in操作符 判断属性来自哪。true实例，false原型
+        // 只有 hasOwnProperty  返回true ，in 返回true时 就证明属性来自实例
+        function isPrototype(obj, name) {
+            return obj.hasOwnProperty(name) && (name in obj)
+        }
+        let result5 = new Proto();
+        result5.name = 'wwq';
+        console.log(isPrototype(result5, 'name'));
+        let keys = Object.keys(Proto.prototype)
+        console.log(keys);
+        // 更简单的原型语法 注意 constructor 指向不是同一个了 因为每创建一个函数都会默认创建它的constructor 这里Proto2的constructor指向的是一个Object的构造函数,所以使用简便写法的同时重写 constructor记得指回Proto2
+        function Proto2() { }
+        let result6 = new Proto2();
+        Proto2.prototype.sayName = function () {
+            console.log('111');
+
+        }
+        result6.sayName();
+
+        // 所有的原生对象（Object，String，Array）的原型 都可以重写 因为原生对象也是用prototype写入的
+        String.prototype.isWith = function (test) {
+            return this.indexOf(test) == 0;
+        }
+        let str = 'hello world';
+        console.log(str.isWith('hello'));
+        // 因为不是str.prototype.isWith  而是 str.isWith 呢 因为str本身就算字符串 后台会处理  但如果是自己创建的prototype就要加prototype关键字
+        // 尽管可以用这个方法为原生对象添加原型方法 但是不建议这么做 因为很容易造成命名冲突 或者 重写原生对象的原型 
+
+    }
+    // faceObj();
+    function faceObj2() {
+        // 组合使用构造函数和原型 都可以拥有各自的属性 又互相连接 （构造函数写 变动属性 原型写共享的不变动的属性）
+        // 构造函数
+        function Proto(name, age, height) {
+            this.name = name;
+            this.age = age;
+            this.height = height;
+            this.arr = ['zml', 'wqq'];
+        }
+        // 原型 (注意重写后constructor的指向问题)
+        Proto.prototype = {
+            constructor: Proto,
+            // 共享不改动的方法
+            sayName: function () {
+                console.log(this.name);
+            }
+        }
+        // 调用
+        let res = new Proto('zml', '18', '1.88');
+        let res2 = new Proto('wqq', '17', '1.60');
+        console.log(res);
+        console.log(res2);
+        res.arr.push('qqq');
+        console.log(res); //不会影响下面的res2 因为数组在构造函数内 不是原型中
+        console.log(res2); //不受影像
+        res.sayName(); //共享方法正常运行
+        res2.sayName();
+        // 寄生构造函数模式
+        function SpliceArr() {
+            let arr = new Array;
+            arr.push.apply(arr, arguments);
+            arr.slice = function () {
+                return arr.join('|');
+            }
+            return arr;
+        }
+        let res3 = new SpliceArr('zml', 'wqq', 'qaq');
+        console.log(res3);
+        console.log(res3.slice());
+        //稳妥构造函数类型 这种模式禁止使用new和this
+        function proson(name, age, sex) {
+            let o = {};
+            o.age = age;
+            o.sex = sex;
+            o.sayName = function () {
+                console.log(name);
+            }
+            return o;
+        }
+        let res4 = proson('zml', '18', '男');
+        res4.sayName();
+    }
+    // faceObj2();
+    //继承
+    function call() {
+        // 第一个构造函数
+        function SuperType() {
+            // true 和 false  单纯的作为构造函数值区别
+            this.flag1 = true;
+        }
+        // 为第一个构造函数添加原型 
+        SuperType.prototype.getSuperType = function () {
+            console.log(this.flag1);
+        }
+        // 第二个构造函数
+        function SubType() {
+            this.flag2 = false;
+        }
+        // 继承 让subType的原型指向superType 使其能访问构造函数1中的flag1属性
+        SubType.prototype = new SuperType();
+        // 给第二个构造函数添加自己的原型
+        SubType.prototype.getSubType = function () {
+            console.log(this.flag2);
+            // 原型的方法还在Super Type中 因为SubType指向Super Type所以能找到  而 属性（flag1）则在SubTyoe的原型中
+            console.log(this.flag1);
+        }
+        // 实例化SubType
+        let res5 = new SubType();
+        res5.getSuperType(); //如果是true则证明继承成功
+        res5.getSubType();
+        // 他们的关系 res5 → SubType → SuperType
+        // 查找的步骤 res5(实例) → SubType.prototype → SuperType.prototype（找到了）→ 如果没找到 到原型链末端才会停止 
+        // 注意现在res5的constructor指向的是Super Type 因为原先SubType的prototype中的constructor被重写的缘故
+        // 也不是被重写了 而是SubType的原型指向了Supertype的原型
+        // 传递参数
+        function SuperType2() {
+            this.colors = ['red', 'blue', 'yellow'];
+        }
+        function SubType2() {
+            // 继承了SuperType2 同时还继承了参数
+            // 这种调用的方法就相当于又在子类构造函数中初始化了父类构造函数的内容 所以实现了继承
+            SuperType2.call(this);
+        }
+        let res6 = new SubType2();
+        console.log(res6.colors);
+        res6.colors.push('green');
+        console.log(res6.colors);
+        let res7 = new SuperType2();
+        console.log(res7.colors);
+
+        // 传参
+        function SuperType3(name) {
+            this.name = name
+        }
+        function SubType3(age) {
+            SuperType3.call(this, 'zml');
+            this.age = age;
+        }
+        let res8 = new SubType3(17);
+        console.log(res8.name);
+        // let res9 = new SuperType3();
+        console.log(res8.age);
+    }
+    // call();
+    // 组合使用继承
+    function Together() {
+        function SuperType(name) {
+            this.name = name;
+            this.colors = ['red', 'blue', 'yellow'];
+        }
+        SuperType.prototype.SayName = function () {
+            console.log(this.name);
+        }
+        function SubType(name, age) {
+            // 继承属性 name是传给SuperType的
+            SuperType.call(this, name);
+            this.age = age;
+        }
+        // 继承原型
+        SubType.prototype = new SuperType();
+        // 注意SubType的constructor的现在指向Supertype  需要指回
+        SubType.constructor = SubType;
+        // 定义子类的原型
+        SubType.prototype.SayAge = function () {
+            console.log(this.age);
+        }
+        let res = new SubType('zml', 17);
+        console.log(res.name); // zml
+        console.log(res.colors); // ["red", "blue", "yellow"]
+        res.colors.push('green');
+        console.log(res.colors); // ["red", "blue", "yellow", "green"]
+        res.SayName();  // zml
+        console.log(res.age); 17
+        res.SayAge(); // 17
+        let res1 = new SuperType('qwe');
+        console.log(res1.name); //qwe
+        console.log(res1.colors); //["red", "blue", "yellow"]
+        // 原型式继承 (由道格拉斯研究出来 利用Object实现浅复制)
+        // 这段代码的意思是 Object对其传入的对象进行了一次浅复制
+        function Object(o) {
+            function F() { }
+            F.prototype = o;
+            return new F();
+        }
+        // 相当于
+        let o = {
+            name: 'zml',
+            age: 18
+        }
+        let res2 = Object(o);
+        res2.name = 'qwe';
+        console.log(res2.name);
+        let res3 = Object(o);
+        res3.age = 20;
+        console.log(res3.age);
+        //Object.create(); 第一个参数和Object没区别 第二个参数可以修改value
+        // 在只想让一个对象和另一个对象保持类似的情况下，原型式继承完全可以胜任
+
+        //  寄生式继承 寄生给Object 
+        function Create(fun) {
+            let clone = Object(fun);
+            clone.SayHi = function () {
+                console.log('hi');
+            }
+            return clone;
+        }
+        let Person = {
+            name: "zml",
+            age: '18'
+        }
+        let res4 = Create(Person);
+        console.log(res4.SayHi());
+
+        // 寄生式继承 优化组合继承的多次调用
+
+
+    }
+    // Together();
+    // 函数表达式
+    function fun() {
+        // 不要这样做
+        let flag;
+        if (flag) {
+            function sayHi() {
+                console.log('hi');
+            }
+        } else {
+            function sayHi() {
+                console.log('yo');
+            }
+        }
+        // 因为这在JS中属于无效无法 浏览器会尝试修正 而且在每个浏览器修正的方式也不一样
+
+        // 可以这样做
+        let flag2;
+        let func;
+        if (flag2) {
+            func = function () {
+                console.log('hi');
+            }
+        } else {
+            func = function () {
+                console.log('Yo');
+
+            }
+        }
+        // 可以这样做 因为这是函数表达式 不是函数声明 也不会有变量提升
+
+        function createFunc() {
+            let arr = [];
+            for (let i = 0; i < 10; i++) {
+                arr[i] = function () {
+                    console.log(i);
+                    return i;
+                }
+            }
+            // console.log(arr);
+        }
+        createFunc();
+        // 块级作用域
+        // (function () {
+        //     // 作用域
+        //     for (var i = 0; i < 10; i++) {
+        //         console.log(i);
+        //     }
+        // })()
+        // console.log(i); //导致错误
+        //  特权方法 （访问局部作用域）
+        let say;
+        function sayHi_D() {
+            // 私有变量和方法
+            let num = 10;
+            let sayHi = function () {
+                console.log('hi~');
+            }
+            say = function () {
+                return sayHi();
+            }
+        }
+        sayHi_D();
+        say();
+
+    }
+    // fun();
+    function variable() {
+        //静态私有变量
+        (function () {
+            // 私有变量和方法
+            let name = 'zml';
+            let sayHi = function () {
+                console.log('hi');
+            }
+            MyObject = function () { };
+            MyObject.prototype.sayHi_D = function () {
+                return sayHi();
+            }
+        })()
+        let res = new MyObject();
+        res.sayHi_D();
+        (function () {
+            let name = '';
+            MyObject = function (value) {
+                name = value;
+            }
+            MyObject.prototype.getName = function () {
+                return name;
+            }
+            MyObject.prototype.setName = function (value) {
+                name = value;
+            }
+        })()
+        let res1 = new MyObject('zml');
+        console.log(res1.getName());
+        res1.setName('wqq');
+        console.log(res1.getName());
+        // 模块模式
+        let application = function () {
+            let arr = [];
+            // 初始化
+            arr.push('任何东西');
+            return {
+                getLength: function () {
+                    console.log(arr.length);
+                },
+                setLength: function (obj) {
+                    if (typeof obj == 'Object') {
+                        arr.push(obj);
+                    }
+                }
+            }
+        }()
+        application.getLength();
+        application.setLength({ name: "zml" });
+        application.getLength();
+    }
+    // variable();
+    //  浏览器对象模型
+    function Bom() {
+        // 获取窗口位置
+        var leftPos = (typeof window.screenLeft == "number") ?
+            window.screenLeft : window.screenX;
+        var topPos = (typeof window.screenTop == "number") ?
+            window.screenTop : window.screenY;
+        // 获取窗口大小
+        var pageWidth = window.innerWidth,
+            pageHeight = window.innerHeight;
+        // 由于浏览器很多规则不同  最好做下判断
+        if (typeof pageWidth != "number") {
+            if (document.compatMode == "CSS1Compat") {
+                pageWidth = document.documentElement.clientWidth;
+                pageHeight = document.documentElement.clientHeight;
+            } else {
+                pageWidth = document.body.clientWidth;
+                pageHeight = document.body.clientHeight;
+            }
+        }
+        // console.log(pageWidth);
+        // console.log(pageHeight);
+        // window.resizeTo(300, 300);
+        // 第一个参数是一个链接，第二个参数是在指定窗口打开链接，第三个参数是弹出新let win = 窗口的一些设置
+        // let win = window.open("https://www.baidu.com", 'topFrame', "height=500,width=1000,top=50,left=50,location=no,menubar=yes,scrollbars=yes");
+        // 改变窗口大小（在自己创建的新窗口下 这两个属性是不被禁止的）
+        // win.resizeTo(1000, 1000);
+        // win.moveTo(500, 500);
+        // 3秒之后关闭这个弹出的窗口
+        // setTimeout(function () {
+        //win.close();//这个属性只能关闭弹出的窗口，不能关闭主窗口 
+        // top.close(); //这个属性可以关闭主窗口
+        // }, 3000)
+        // 新弹出的标签页有个属性叫 opener ，其中保存着打开它的原始窗口对象，它指向原始窗口的window对象
+        // console.log(win.opener == window)    // true
+        // 如果给他赋值 null  代表不需要与打开它的原始窗口进行通讯
+        // win.opener = null;
+        // 窗口限制
+        // 有段时间 窗口的弹窗达到了肆无忌惮的地步,然后许多浏览器都会限制一些弹出窗口的行为 
+        // 弹窗的屏蔽程序
+        // 许多浏览器都内置了弹窗屏蔽程序,如果是被弹窗屏蔽程序所屏蔽的 window.open 很有可能返回null
+        // let win = window.open("https://www.baidu.com", 'topFrame');
+        // if(win == null){
+        //  console.log('窗口被屏蔽')
+        // }
+        // 还有一种情况是浏览器扩展或者是其他阻止了弹窗,这时浏览器会报出一段错误,所以要想准确的判断弹窗是否被屏蔽 可以使用 try-catth中
+        // let flag = false;
+        // try {
+        //     let win = window.open("https://www.baidu.com", 'topFrame');
+        //     if (win == null) {
+        //         flag = true;
+        //     }
+        // } catch (err) {
+        //     flag = true;
+        // }
+        // if (flag) {
+        //     console.log('弹窗被拦截');
+        // }
+        // try-catch的使用方法 理解:抛出错误的意思 在错误后也照样执行后面的代码  try写容易出错的代码 一旦出错将不会继续执行,catch写出错后要执行的代码或者获取错误
+        // 写容易出错的程序
+        // try {
+        //     console.log(111); // 111
+        //     console.log(abc); // 找不到会报错
+        //     console.log('qwe'); //上一行报错 这一行将不会执行
+        // } catch (err) {
+        //     //写出错后要执行的程序
+        //     console.log(222); // 222
+        //     console.log(err); // 报的错误
+        //     console.log(333); //333 不会影响这一行的执行
+        // }
+        // 定时器和延时器
+        // (function () {
+        //     let num = 0;
+        //     let count = 10;
+        //     let setIn = null;
+        //     function setI() {
+        //         num++;
+        //         if (num == count) {
+        //             clearInterval(setIn);
+        //             console.log(num);
+
+        //         }
+        //     }
+        //     setIn = setInterval(setI, 500)
+        // })();
+        // (function () {
+        //     let num = 0;
+        //     let count = 10;
+        //     let setTi = null;
+        //     function setT() {
+        //         num++;
+        //         if (num < count) {
+        //             setTimeout(setT, 500);
+        //         } else {
+        //             console.log(num);
+        //         }
+        //     }
+        //     setTimeout(setT, 500);
+        // })()
+        // 定时器和延时器都能实现同样的功能,但是尽量使用定时器(setTimeout) 因为延时器(setInterval) 在上一次没执行之后可能就启用了下一个延时的开始,而定时器不会
+        // 系统弹框
+        // if (confirm('are you sure?')) {
+        //     alert("you onclick the cancel");
+        // } else {
+        //     alert("you onclick the OK");
+        // }
+        // window.find();
+        // window.print();
+
+        // 检测浏览器是否安装了某个插件
+        console.log(navigator.plugins);
+        function hasPlugins(name) {
+            // 第一步转小写 因为不管是传入的文字还是检测到的插件 都转为一致的格式 易于比较 不易混淆
+            name = name.toLowerCase();
+            // console.log(name);
+            // 遍历浏览器安装的插件
+            for (let i = 0; i < navigator.plugins.length; i++) {
+                console.log(navigator.plugins[i].name.toLocaleLowerCase());
+                if ((navigator.plugins[i].name.toLocaleLowerCase()).indexOf(name) > -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+        }
+        console.log(hasPlugins('Flash'));
+        // 在IE中检测是否安装了某个插件
+        // IE 不支持上面的检测方式，但是IE有专门的检测方式 ActiveXObject(前面加new),需要特别注意的一点是 IE是以COM对象的方式实现插件的，所以要知道每个插件的标识符。例如：Flash的标识符是：ShockwaveFlash.ShockwaveFlash  检测不到会报错，所以用try好一点
+        function hasIEPlugins(name) {
+            try {
+                new ActiveXObject(name);
+                return true;
+            } catch (ero) {
+                return false;
+            }
+        }
+        console.log(hasIEPlugins('ShockwaveFlash.ShockwaveFlash'));
+        // 鉴于两种方法的使用区别较大，所以建议针对每个插件进行检测
+        function hasFlash() {
+            // 检测大众浏览器是否检测到插件
+            let result = hasPlugins('Flash');
+            // 如果没有检测到就用IE的检测
+            if (!result) {
+                result = hasIEPlugins('ShockwaveFlash.ShockwaveFlash');
+            }
+            return result
+        }
+        console.log(hasFlash());
+        // screen 检测浏览器窗口外部的显示器的信息
+        console.log(screen.availHeight);
+        console.log(screen.availWidth);
+        console.log(screen.width);
+        console.log(screen.height);
+        console.log(screen.top);
+        window.resizeTo(screen.availWidth, screen.availHeight)
+        // history对象 
+        // 保存着用户的上网记录。前进后退按钮  输入window对象
+        history.go(); //转入一个整数（正负） 代表要跳转还是后退
+        history.back(); //后退一个页面
+        history.forward();//前进一个页面
+    }
+    // Bom();
+    function isYes() {
+        //能力检测
+        // 先检测最长用的属性，可以保证代码优化，能力检测要合理
+        // 这不是能力检测，这只是判断是否有这个方法
+        function isSortble(object) {
+            return object.sort;
+        }
+        //最好的能力检测方法是判断是不是一个函数
+        function isSort(object) {
+            return typeof object.sort == 'function';
+        }
+        // 在可能的情况下 要尽量使用typeof操作符进行比较
+        let xhr = new ActiveXObject('Microsoft.XMLHttp');
+        // 最好的能力检测
+        function isHostMethod(object, property) {
+            let t = typeof object[property];
+            return t == 'function' || (!!(t == 'object' && object[property])) || t == 'unknown';
+        }
+        // 使用
+        console.log(isHostMethod(xhr, 'open'));
+        console.log(isHostMethod(xhr, 'foo'));
+        // 能力检测，不是浏览器检测
+        // 在实际开发中，应该将能力检测作为确定下一步解决方案的依据，而不是用它来判断用户使用的是什么浏览器。
+        // 意思就是 能力检测用来优化代码，而不是检测浏览器
+        // 常用的能力检测
+        // 确定浏览器是否支持Netscape风格的插件
+        let hasNSPlugins = !!(navigator.plugins && navigator.plugins.length);
+        // 确定浏览器是否具有DOM1级规定的能力
+        let hasDOM1 = !!(document.getElementById && document.createElement && document.getElementsByTagName);
+    }
+    // isYes();
+    function DOM2() {
+        // 延迟执行JavaScript脚本
+        function loadScript(url) {
+            let script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = url;
+            document.body.appendChild(script);
+        }
+        // setTimeout(() => {
+        //     loadScript('./1.js');
+        // }, 2000);
+        // 延迟style的执行
+
+        function loadStyle(url) {
+            let link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = url;
+            let head = document.querySelector('head');
+            head.appendChild(link);
+
+        }
+        // setTimeout(() => {
+        //     loadStyle('./1.css');
+        // }, 2000);
+
+    }
+    DOM2();
+</script>
+<!-- <script src="C:\Users\Administrator\Desktop\张梦龙 勿动\随书下载\Ch09\client.js"></script> -->

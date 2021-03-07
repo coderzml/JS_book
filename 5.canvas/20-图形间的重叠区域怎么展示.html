@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    canvas {
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas width="300" height="300">您的浏览器不支持canvas</canvas>
+</body>
+
+</html>
+<script>
+  let canvas = document.querySelector('canvas');
+  if (canvas.getContext) {
+    let ctx = canvas.getContext('2d');
+    // 绘制两个图形 第二个图形在第一个图形之上  压着50px
+    ctx.fillStyle = 'red';
+    ctx.fillRect(10, 10, 150, 150);
+    // 重叠的部分相交的方式 这个属性一定是在第二个图形没有绘制出来的时候设置的 就像 绘制前设置颜色一样的道理
+    ctx.globalCompositeOperation = "source-atop";
+    ctx.fillStyle = 'blue';
+    ctx.fillRect(85, 85, 150, 150);
+  }
+
+</script>

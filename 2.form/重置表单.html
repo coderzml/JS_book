@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="#">
+        name <input type="text" name="color">
+        passworld <input type="password" name="" id="" autofocus>
+        <input type="reset" class="isReset">
+    </form>
+    <form action="#">
+        name <input type="text">
+        passworld <input type="password" name="" id="">
+        <input type="reset">
+    </form>
+</body>
+
+</html>
+<script>
+    let reset = document.querySelector('.isReset');
+    reset.addEventListener('click', function (event) {
+        let is = confirm('是否重置数据');
+        console.log(is);
+        if (is) {
+            // 点击确定就不做任何操作就重置表单了
+        } else {
+            event.preventDefault();
+        }
+    });
+    let form1 = document.querySelectorAll('form')[0];
+    console.log(form1.elements[0]);
+    console.log(form1.elements['color']);
+
+</script>

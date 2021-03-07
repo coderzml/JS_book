@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            position: relative;
+            width: 1000px;
+            height: 1000px;
+            background: rgba(200, 200, 200, 0.5);
+            z-index: 2;
+        }
+
+        .radio {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            border-radius: 50%;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+    </div>
+    <div class="radio"></div>
+</body>
+
+</html>
+<script>
+    // 跟随位置不对  感觉是因为获取的太快了 没到正确的位置就赋值了
+    let box = document.querySelector('.box');
+    let radio = document.querySelector('.radio');
+    // 定义一些基本参数 
+    let ball = {
+        running: false,
+        x: 5,
+        y: 2,
+        flag: false,
+    }
+    // 首先第一个功能 小球跟着鼠标跑
+    box.addEventListener('mousemove', function (e) {
+        radio.style.transition = '0';
+
+        if (!ball.running) {
+            // if (ball.flag) {
+            //     radio.style.transition = '0';
+            //     radio.style.left = ex + 'px';
+            //     radio.style.top = ey + 'px';
+            // } else {
+            radio.style.transition = '0';
+            radio.style.left = e.offsetX - 50 + 'px';
+            radio.style.top = e.offsetY - 50 + 'px';
+
+            // }
+        }
+    });
+    // 第二个功能 点击松手 球会自由落体
+    let timer;
+    box.addEventListener('click', function (e) {
+        let num = 0;
+        if (!ball.running) {
+            radio.style.transition = '0.2s';
+            timer = setInterval(() => {
+                num++;
+                let x = num * ball.x;
+                let y = num * ball.y;
+                radio.style.transform = 'translate(' + x + 'px' + ',' + y + 'px' + ')';
+                if (x + e.offsetX > box.clientWidth - 50 || x + e.offsetX < 0) {
+                    num = 1;
+                    ball.x = -5;
+                    ball.y = -2;
+                }
+                if (y + e.offsetY > box.clientHeight - 50 || y + e.offsetY < 0) {
+                    num = 1;
+                    ball.x = -5;
+                    ball.y = -2;
+                }
+            }, 20);
+            ball.running = true;
+        }
+    });
+    box.addEventListener('mouseout', function (e) {
+        ball.running = false;
+        ball.flag = true;
+        clearInterval(timer);
+    });
+</script>

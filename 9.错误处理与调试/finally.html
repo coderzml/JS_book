@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+  function message() {
+    try {
+      return 2;
+    } catch (error) {
+      return 1;
+    } finally {
+      // finally 是最后的意思
+      return 0;
+    }
+  }
+  console.log(message());
+  // 只要有finally语句 不管try和catch里面的代码怎样 finally里的代码都会执行 return也不留外
+  // 在IE7 之前 如果想使用finally必须要有 catch语句  所以要先在IE7之前使用finally 哪怕catch里面什么也不写 但是也要存在
+</script>

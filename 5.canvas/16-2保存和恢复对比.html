@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="300" height="300">您的浏览器不支持canvas</canvas>
+</body>
+
+</html>
+<script>
+    let canvas = document.querySelector('canvas');
+    if (canvas.getContext) {
+        let ctx = canvas.getContext('2d');
+        // 绘制第一个矩形
+        ctx.fillRect(10, 10, 50, 50);
+        // 定义一个颜色绘制第二个矩形
+        ctx.fillStyle = 'red';
+        ctx.fillRect(10, 60, 50, 50);
+        // 定义第二个颜色绘制第二个矩形
+        ctx.fillStyle = 'blue';
+        ctx.fillRect(10, 110, 50, 50);
+        // 恢复
+        ctx.restore();
+        ctx.fillRect(70, 10, 50, 50);
+        ctx.restore();
+        ctx.fillRect(70, 80, 50, 50);
+
+        // 结论 要先保存 才能恢复  拿数组做比较
+    }
+</script>

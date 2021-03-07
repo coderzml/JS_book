@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 设置引用的子页面的地址   onload 是防止子页面和父页面在同域-->
+    <iframe id="ifr" src="http://127.0.0.1:5500/localhost/receive-callback.html" onload="sendCommand();">
+        No frame!
+    </iframe>
+</body>
+
+</html>
+<script type="text/javascript">
+    function sendCommand() {
+        var ifr = document.getElementById("ifr");
+        // 发送消息 
+        ifr.contentWindow.postMessage("<span>我是传递过去的标签</span>", "http://127.0.0.1:5500/localhost/receive-callback.html");
+    }
+    // 接收子页面回调的消息
+    window.onmessage = function (event) {
+        alert(event.data);
+    }
+</script>

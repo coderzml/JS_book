@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas {
+            width: 200px;
+            height: 200px;
+            /* border: 1px solid #000; */
+        }
+    </style>
+</head>
+
+<body>
+    <canvas></canvas>
+</body>
+
+</html>
+<script>
+    let canvas = document.querySelector('canvas');
+    // 获取2D绘图对象
+    // 判断浏览器是否支持canvas绘图
+    if (canvas.getContext) {
+        // 获取绘图对象
+        let context = canvas.getContext('2d');
+        console.log(context);
+        // 设置图像格式
+        let imgURL = canvas.toDataURL('image/png');
+        // 显示图像
+        let img = document.createElement('img');
+        img.src = imgURL;
+        document.body.appendChild(img);
+
+    }
+</script>

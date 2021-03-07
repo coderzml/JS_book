@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="#">
+        <input type="text" value="default value">
+        <button>点击选择</button>
+        <input type="Number">
+    </form>
+</body>
+
+</html>
+<script>
+
+    document.querySelector('button').onclick = function () {
+        let forms = document.forms[0].elements[0];
+        selectText(forms, 0, 7);
+    };
+
+    function selectText(textbox, startIndex, stopIndex) {
+        if (textbox.setSelectionRange) {
+            textbox.setSelectionRange(startIndex, stopIndex);
+        } else if (textbox.createTextRange) {
+            var range = textbox.createTextRange();
+            range.collapse(true);
+            range.moveStart("character", startIndex);
+            range.moveEnd("character", stopIndex - startIndex);
+            range.select();
+        }
+        textbox.focus();
+    }
+
+</script>

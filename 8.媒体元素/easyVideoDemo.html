@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .videoBox video {
+      width: 500px;
+      height: 400px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="videoBox">
+    <video src="./video/trailer.mp4"></video>
+  </div>
+  <div class="fun">
+    <button>播放</button>
+    <span class="start">0</span> / <span class="end">0</span>
+  </div>
+</body>
+
+</html>
+<script>
+  // 这个案例很简单 根据属性点击播放 点击暂停就实现了
+  let video = document.querySelector('.videoBox video'),
+    btn = document.querySelector('.fun button'),
+    start = document.querySelector('.start'),
+    end = document.querySelector('.end');
+  // 这里应该参考属性 写成活的
+  end.innerHTML = '52s';
+  console.log(video);
+  btn.addEventListener('click', function () {
+    if (video.paused) {
+      video.play();
+      btn.innerHTML = '暂停';
+    } else {
+      video.pause();
+      btn.innerHTML = '播放';
+    }
+  });
+  setInterval(function () {
+    start.innerHTML = Math.ceil(video.currentTime) < 10 ? '0' + Math.ceil(video.currentTime) + 's' : Math.ceil(video.currentTime) + 's';
+  });
+</script>

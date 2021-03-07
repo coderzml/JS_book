@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+  let str1 = "张梦龙李畅畅王留涛李贺鑫徐梭淦杨境铭李单位王东杰朱徳康黄影影殷甜甜曹家堡袁萌苗韩锦燕王亚楠刘志豪郑徐涛闫思存于雪凤单金芳陈贺方张明艳张晓龙徐顺利李旭阳赵禄晓王光辉薛鹤鹏朱林涛王梦鑫";
+  let new_str = [];
+  console.log(str1.substring(0, 3));
+  let length = str1.length / 3;
+  let a;
+  for (let i = 0; i < length; i++) {
+    // new_str.push(strz1.substr(0 * i - i * 3, i * 3));
+    console.log(str1.substr(0, i * 3));
+    a = str1.substr(0, i * 3);
+    for (let j = 0; j < i; j++) {
+      console.log(a);
+      new_str.push(a.substr(j * 3));
+    }
+  }
+  console.log(new_str);
+</script>

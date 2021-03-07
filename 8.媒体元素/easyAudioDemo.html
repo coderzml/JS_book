@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button>播放</button>
+</body>
+
+</html>
+<script>
+  let button = document.querySelector('button');
+  let audio = new Audio('before.mp3');
+  // 这里没有播放出来
+  audio.canplaythrough = function (event) {
+    audio.play();
+  }
+  // 写个按钮点击播放正常了
+  button.onclick = function () {
+    audio.play();
+  }
+</script>

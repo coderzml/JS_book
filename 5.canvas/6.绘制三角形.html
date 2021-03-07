@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="300px" height="300px">您的浏览器不支持canvas</canvas>
+</body>
+
+</html>
+<script>
+    let canvas = document.querySelector('canvas');
+    if (canvas.getContext) {
+        let ctx = canvas.getContext('2d');
+        // 调出路径
+        ctx.beginPath();
+        // 起始位置
+        ctx.moveTo(80, 60);
+        // 结束位置
+        ctx.lineTo(220, 60);
+        // 第二条线
+        // ctx.moveTo(220, 60);
+        ctx.lineTo(220, 200);
+        // 闭合路径
+        // ctx.closePath();
+        // 画
+        // ctx.stroke();
+        ctx.fill();
+    };
+
+</script>

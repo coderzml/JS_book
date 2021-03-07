@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="300px" height="300px">您的浏览器不支持canvas</canvas>
+</body>
+
+</html>
+<script>
+    let canvas = document.querySelector('canvas');
+    if (canvas.getContext) {
+        let ctx = canvas.getContext('2d');
+        // 调出路径
+        ctx.beginPath();
+        ctx.moveTo(50, 50);
+        ctx.arcTo(200, 50, 200, 200, 100);
+        // 这个是补足arcTo画的缺点的 它的起始值是moveTo决定 不是arcTo
+        ctx.lineTo(200, 250);
+        ctx.stroke();
+        ctx.beginPath();
+        // 视图
+        ctx.rect(50, 50, 10, 10);
+        ctx.rect(200, 50, 10, 10)
+        ctx.rect(200, 200, 10, 10)
+        ctx.fill()
+    };
+
+</script>

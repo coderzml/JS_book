@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <p></p>
+    <input type="button" value="callback">
+</body>
+
+</html>
+<script>
+    let thet;
+    window.onmessage = function (event) {
+        document.querySelector('p').innerHTML = event.data;
+        thet = event;
+    }
+    document.querySelector('input').onclick = function () {
+        let massage = {
+            data: thet.data,
+            origin: thet.origin + '/localhost2/C.html',
+            localhost: 'http://127.0.0.1:5500/localhost2/container.html',
+        }
+        thet.source.postMessage(JSON.stringify(massage), massage.localhost);
+    };
+</script>

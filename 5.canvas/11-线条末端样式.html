@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="300px" height="300px">您的浏览器不支持canvas绘图</canvas>
+</body>
+
+</html>
+<script>
+    let canvas = document.querySelector('canvas');
+    if (canvas.getContext) {
+        let ctx = canvas.getContext('2d');
+        // 使用循环画三条线 (平头 圆头 平头高点)
+        let lineStyle = ['butt', 'round', 'square'];
+        for (let i = 1; i < 4; i++) {
+            ctx.beginPath();
+            ctx.moveTo(50 * i, 100);
+            ctx.lineTo(50 * i, 200);
+            ctx.lineCap = lineStyle[i - 1];
+            // 线条大小
+            ctx.lineWidth = 20;
+            ctx.stroke();
+        }
+        // 绘制两条对比线
+        ctx.beginPath();
+        ctx.moveTo(0, 100);
+        ctx.lineTo(300, 100);
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        // 第二条
+        ctx.moveTo(0, 200);
+        ctx.lineTo(300, 200);
+        ctx.stroke();
+
+    }
+</script>

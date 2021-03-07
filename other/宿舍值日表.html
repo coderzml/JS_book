@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>宿舍值日表</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .box {
+      margin-top: 5%;
+      width: 100%;
+      height: 100%;
+      /* background-color: pink; */
+    }
+
+    .random {
+      width: 640px;
+      font-size: 10em;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    button {
+      width: 300px;
+      height: 150px;
+      display: block;
+      margin: 0 auto;
+      margin-top: 100px;
+      font-size: 5em;
+    }
+
+    @media screen and (max-width: 480px) {
+      .random {
+        width: 275px;
+        font-size: 68px;
+      }
+
+      button {
+        width: 150px;
+        height: 75px;
+        font-size: 40px;
+      }
+
+
+    }
+
+    .names {
+      margin-top: 20px;
+      width: 100%;
+      /* margin: 0 auto; */
+    }
+
+    .names p {
+      color: red;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div class="random">
+      <span>值日表</span>
+    </div>
+    <button>开始</button>
+    <div class="names">
+
+    </div>
+  </div>
+</body>
+<script>
+  var arr = ['张梦龙', '王留涛', '陈贺方', '刘家豪', '李龙', '于雪凤', '张晓龙', '那个兄弟'];
+  // 统计数组的长度
+  let oldLength;
+  let newLength;
+  let h2 = document.querySelector('.random span');
+  let button = document.querySelector('button');
+  let flag = true;
+  let timer;
+  let random;
+  button.addEventListener('click', function () {
+    if (arr.length == 0) {
+      h2.innerHTML = '已结束';
+      return false;
+    }
+    // 每次点击的时候证明已经有数组元素被删除 长度将改变 所以点击之后再统计数组长度 达到更新的目的
+    oldLength = arr.length;
+    // 常规操作不做注释
+    if (flag) {
+      button.innerHTML = '结束';
+      flag = false;
+      timer = setInterval(function () {
+        random = Math.floor(Math.random() * arr.length);
+        h2.innerHTML = arr[random];
+      }, 100)
+
+    } else {
+      flag = true;
+      button.innerHTML = '开始';
+      clearInterval(timer);
+      // new code
+      // 声明一个空数组用来统计重复元素的下标
+      let removeIndex = [];
+      // 临时插入 记录周几打扫厕所
+      let zhou = ['厕所：', '周日：', '周六：', '周五：', '周四：', '周三：', '周二：', '周一：'];
+      let names = document.querySelector('.names');
+      let p = document.createElement('p');
+      p.innerHTML = zhou[arr.length - 1] + arr[random];
+      names.appendChild(p);
+      // 过滤器 过滤出相同的元素 并提供所在的下标
+      arr.filter(function (item, index, arr) {
+        // return 不出来index能return出来item 所以上面建个removeIndex变量push进去
+        // arr[random]代表随机的某项
+        if (arr[random] == item) {
+          removeIndex.push(index);
+        }
+      })
+      // 遍历统计的下标 并根据下标删除元素
+      for (let i = 0; i < removeIndex.length; i++) {
+        //  删除的时候数组会变短 变短后就会坐标发生错误 这也是创建两个统计数组长度的变量的原因
+        newLength = arr.length;
+        // 判断新数组的长度不等于老数组
+        // 两个数组长度相等 只存在第一次删除元素的时候  第一次删除元素的时候正常删除就行了
+        if (oldLength == newLength) {
+          arr.splice(removeIndex[i], 1);
+        } else {
+          // 删除完第一个数组元素 长度就不相等了 接下来都会执行下面代码
+          // 删除元素后长度会发生变化 用原本的长度 减去 发生变化的数组 就是应该删除的数组位置
+          arr.splice(removeIndex[i] - (oldLength - newLength), 1);
+        }
+      }
+    }
+  })
+
+</script>
+
+</html>

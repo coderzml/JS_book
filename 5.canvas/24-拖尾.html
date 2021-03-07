@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas width="1000" height="1000"></canvas>
+</body>
+
+</html>
+<!-- 上一个都没有理解 这一个除去事件监听 也就35行代码 一定要理解      -->
+<script>
+    // 获取标签们
+    var canvas = document.querySelector('canvas');
+    var ctx = canvas.getContext('2d');
+    // 定义了一个raf 和 running变量 
+    // 英国皇家空军
+    var raf;
+    // running 是运行的意思
+    var running = false;
+    // 球
+    var ball = {
+        // 定义一些基本信息
+        x: 100,
+        y: 100,
+        vx: 5,
+        vy: 1,
+        radius: 25,
+        color: 'blue',
+        // 画出一个球
+        draw: function () {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+            ctx.closePath();
+            ctx.fillStyle = this.color;
+            ctx.fill();
+        }
+    };
+    // 画一个矩形空间
+    function clear() {
+        // 第一个疑问 为什么不用rgba就不会出现拖尾
+        ctx.fillStyle = 'rgba(220,220,220,0.3)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    // 画
+    function draw() {
+        // 当开始画的时候 才会出现矩形空间
+        clear();
+        // 定义的球出现
+        ball.draw();
+        // 
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+        // 限制活动区域
+        if (ball.y + ball.vy > canvas.height || ball.y + ball.vy < 0) {
+            ball.vy = -ball.vy;
+        }
+        if (ball.x + ball.vx > canvas.width || ball.x + ball.vx < 0) {
+            ball.vx = -ball.vx;
+        }
+
+        raf = window.requestAnimationFrame(draw);
+    }
+    // 当鼠标滑动的时候
+    canvas.addEventListener('mousemove', function (e) {
+        // running函数等于false就进来
+        if (!running) {
+            // 画一个矩形
+            clear();
+            // 获取鼠标的位置传给 ball对象
+            ball.x = e.offsetX;
+            ball.y = e.offsetY;
+            // ball对象就开始画
+            ball.draw();
+        }
+    });
+
+    canvas.addEventListener('click', function (e) {
+        if (!running) {
+            raf = window.requestAnimationFrame(draw);
+            running = true;
+        }
+    });
+
+    canvas.addEventListener('mouseout', function (e) {
+        window.cancelAnimationFrame(raf);
+        running = false;
+    });
+
+    ball.draw();
+</script>

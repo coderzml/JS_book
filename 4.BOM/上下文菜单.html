@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        ul {
+            margin: 0;
+            padding: 0;
+            position: absolute;
+
+            list-style: none;
+            width: 100px;
+            display: none;
+        }
+
+        li {
+            height: 30px;
+            border: 1px solid #000;
+            line-height: 30px;
+            text-align: center;
+        }
+
+        li:hover {
+            background-color: pink;
+        }
+
+        a {
+            text-decoration: none
+        }
+    </style>
+</head>
+
+<body>
+    <div>右键查看</div>
+    <ul>
+        <li><a href="http://www.baidu.com">百度</a></li>
+        <li><a href="http://www.baidu.com">百度</a></li>
+        <li><a href="http://www.baidu.com">百度</a></li>
+        <li><a href="http://www.baidu.com">百度</a></li>
+    </ul>
+</body>
+
+</html>
+<script src="./EventUtil.js"></script>
+<script>
+    // 文档加载完毕后
+    EventUtil.addHandler(window, 'load', function () {
+        console.log('laod done');
+        // contextmenu事件 右键查看
+        EventUtil.addHandler(document, 'contextmenu', function (event) {
+            // 获取event对象
+            event = EventUtil.getEvent(event);
+            // 阻止默认行为（右键的默认行为）
+            EventUtil.preventDefault(event);
+            // 获取ul元素
+            let ul = document.querySelector('ul');
+            // 添加位置坐标属性
+            ul.style.top = event.clientY + 'px';
+            ul.style.left = event.clientX + 'px';
+            ul.style.display = 'block';
+        });
+        // 点击页面的随意位置ul隐藏
+        EventUtil.addHandler(document, 'click', function () {
+            document.querySelector('ul').style.display = 'none';
+        })
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // let ul = document.querySelector('ul');
+    // window.addEventListener('load', function () {
+    //     document.addEventListener('contextmenu', function (e) {
+    //         e.preventDefault();
+    //         ul.style.top = e.clientY + 'px';
+    //         ul.style.left = e.clientX + 'px';
+    //         ul.style.display = 'block';
+    //     })
+    //     document.addEventListener('click', function () {
+    //         ul.style.display = 'none';
+    //     })
+    // })
+</script>

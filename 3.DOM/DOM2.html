@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 500px;
+            height: 2000px;
+            background-color: red;
+            margin-top: 200px;
+            margin-left: 200px;
+            padding: 20px;
+            border: 10px solid #000;
+        }
+
+        .scroll {
+            height: 300px;
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="scroll"></div>
+    </div>
+</body>
+
+</html>
+<script>
+    let box = document.querySelector('.box');
+    console.log(box);
+    console.log(box.offsetWidth);
+    console.log(box.offsetTop);
+    console.log(document.documentElement.scrollHeight);
+    window.onscroll = function () {
+        console.log(document.scrollTop);
+
+
+    }
+
+</script>

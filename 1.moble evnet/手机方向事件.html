@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            width: 300px;
+            height: 300px;
+            background-color: pink;
+            color: aliceblue;
+            font-size: 24px;
+            text-align: center;
+            line-height: 300px;
+            margin: 150px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div>正对</div>
+</body>
+
+</html>
+<script>
+    window.onload = function () {
+        let div = document.querySelector('div');
+        window.onorientationchange = function (e) {
+            if (window.orientation == 0) {
+                div.innerHTML = '正对';
+            } else if (window.orientation == 90) {
+                div.innerHTML = '向左90度';
+            } else if (window.orientation == -90) {
+                div.innerHTML = '向右90度';
+            } else if (window.orientation == 180) {
+                div.innerHTML = '向下';
+            }
+        };
+    }
+
+</script>

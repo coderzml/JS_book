@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            float: left;
+            width: 300px;
+            height: 300px;
+            border: 1px solid #000;
+        }
+
+        img {
+            width: 250px;
+        }
+
+        .red {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <p>拖动图片到文本框</p>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <img src="https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2063352404,1793478785&fm=26&gp=0.jpg" alt=""
+        draggable="true" class="img">
+</body>
+
+</html>
+<script>
+    // 前言：分清哪些是拖动元素事件  哪些  是目标元素事件
+    // 1.设置标签为可移动
+    // 2.拖动开始时设置属性
+    let img = document.querySelector('.img');
+    let div = document.querySelectorAll('.box');
+    img.ondragstart = function (event) {
+        // 设置类名
+        event.dataTransfer.setData('text', img.className);
+    }
+    // 循环每一个div
+    for (let i = 0; i < div.length; i++) {
+        // 3.设置可放置图标 
+        div[i].ondragover = function (event) {
+            event.preventDefault();
+        }
+        // 4.设置目标元素为可放置
+        div[i].ondrop = function (event) {
+            event.preventDefault();
+            // 拿到类名
+            let data = event.dataTransfer.getData('text');
+            console.log(data);
+            // 移动元素  event.target 代表元素本身 而不是body元素
+            console.log(event.target);
+            event.target.appendChild(document.querySelector(data));
+        }
+    }
+</script>

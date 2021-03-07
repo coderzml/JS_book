@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul class="listBox">
+        <li class="list1">font</li>
+        <li class="list2">font</li>
+        <li class="list3">font</li>
+    </ul>
+</body>
+
+</html>
+<script src="./EventUtil.js"></script>
+<script>
+    // 传统的事件处理程序 （暂用内存 代码量较多 处理麻烦）
+    let listBox = document.querySelector('.listBox');
+    // let list1 = document.querySelector('.list1');
+    // let list2 = document.querySelector('.list2');
+    // let list3 = document.querySelector('.list3');
+    // EventUtil.addHandler(list1, 'click', function () {
+    //     this.innerHTML = 'font1';
+    // });
+    // EventUtil.addHandler(list2, 'click', function () {
+    //     this.innerHTML = 'font2';
+    // });
+    // EventUtil.addHandler(list3, 'click', function () {
+    //     this.innerHTML = 'font3';
+    // });
+    // 利用事件委托    (代码更加简便 不占用内存)
+    EventUtil.addHandler(listBox, 'click', function (event) {
+        event = EventUtil.getEvent(event);
+        let target = EventUtil.getTarget(event);
+        switch (target.className) {
+            case 'list1':
+                target.innerHTML = 'font1';
+                break;
+            case 'list2':
+                target.innerHTML = 'font2';
+                break;
+            case 'list3':
+                target.innerHTML = 'font3';
+                break;
+        }
+    });
+</script>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box2 {
+            width: 500px;
+            height: 500px;
+            background-color: pink;
+            position: absolute;
+        }
+
+        .box2_son {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto;
+
+            background-color: red;
+
+        }
+    </style>
+</head>
+
+<body>
+    <button class="box" onload="alert('123')">我是DIV</button>
+    <div class="box2">
+        <div class="box2_son"></div>
+    </div>
+</body>
+
+</html>
+<script src="./EventUtil.js"></script>
+<script>
+    // let div = document.querySelector('.box');
+    // div.addEventListener('click', function (e) {
+    //     console.log('点击了DIV');
+    //     e.stopPropagation();
+    //     console.log(e.target);
+    // })
+    // document.addEventListener('click', function () {
+    //     console.log('点击了DOCUMENT');
+    // })
+    // div.addEventListener('click', show);
+    // function show() {
+    //     console.log(132);
+    // }
+    // // 移除
+    // div.removeEventListener('click', show);
+    // div.addEventListener('click', function () {
+    //     console.log('点击了DIV');
+    // })
+    // div.addEventListener('click', function () {
+    //     console.log('点击了DIV2');
+    // })
+    // div.attachEvent('onclick', show)
+    // function show() {
+    //     console.log(123);
+    // }
+    // div.darachEvent('onclick', show);
+    // EventUtil.addHandler(window, 'resize', function () { });
+    // document.body.style.cssText = 'height:3000px';
+    // EventUtil.addHandler(window, 'scroll', function () {
+    //     if (document.compatMode == 'CSS1Compat') {
+    //         console.log(document.documentElement.scrollTop);
+    //     } else {
+    //         console.log(document.body.scrollTop);
+    //     }
+    // });
+    // EventUtil.addHandler(document.querySelector('.box'), 'click', function () {
+    //     alert('click');
+    // });
+    // 获取鼠标在元素内的坐标
+    EventUtil.addHandler(document.body, 'click', function (event) {
+        event = EventUtil.getEvent(event);
+        console.log(event.screenX);
+        console.log(event.screenY);
+    });
+    // 修改键
+    EventUtil.addHandler(document.querySelector('.box2'), 'click', function (event) {
+        event = EventUtil.getEvent(event);
+        let arr = new Array();
+        // 这些值中包含的都是布尔志  按下的键就会被改为true
+        if (event.shiftKey) {
+            arr.push('shift');
+            alert('我按下了shift');
+        }
+        if (event.ctrlKey) {
+            arr.push('ctrl');
+            alert('我按下了ctrl');
+        }
+        if (event.altKey) {
+            arr.push('alt');
+        }
+        if (event.metaKey) {
+            arr.push('meta');
+        }
+        console.log(arr);
+    });
+    let num = 1;
+    EventUtil.addHandler(document.documentElement, 'mousewheel', function (event) {
+        event = EventUtil.getEvent(event);
+
+        let Top = event.wheelDelta;
+        console.log(Top);
+        if (Top < 0) {
+            document.querySelector('.box2').style.top = - Top * num + 'px';
+        }
+        if (Top > 0) {
+            num--;
+            document.querySelector('.box2').style.top = Top * num + 'px';
+            console.log(num);
+
+        }
+        num++;
+        console.log(num);
+    });
+</script>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="file" class="file">
+</body>
+
+</html>
+<script>
+    let file = document.querySelector('.file');
+    file.onchange = function (event) {
+        // 获取异步对象
+        let reader = new FileReader();
+        // 获取读取的数据
+        let data = event.target.files;
+        // 限制读取内容
+        console.log(data);
+        // 设置读取的大小
+        let blob = data[0].slice(0, 32);
+        if (blob) {
+            // 设置格式
+            reader.readAsText(blob);
+            // 成功后的结果
+            reader.onload = function () {
+                console.log(reader.result);
+            }
+            // 下面是读取失败的事件
+        }
+    }
+</script>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            width: 300px;
+            height: 300px;
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+</body>
+
+</html>
+<script src="../EventUtil.js"></script>
+<script>
+    let div = document.querySelector('div');
+    function HandleTouchEvent(event) {
+        // if (event.touches.length == 1) { }
+        switch (event.type) {
+            case 'gesturestart':
+                console.log(event.touches);
+                div.innerHTML = 'Touchstart : X = ' + event.rotation + 'Y = ' + event.scale + '</br>';
+                break;
+            case 'gesturechange':
+                div.innerHTML += 'Touchend : X = ' + event.rotation + 'Y = ' + event.scale + '</br>';
+                break;
+            case 'gestureend':
+                div.innerHTML += 'Touchmove : X = ' + event.rotation + 'Y = ' + event.scale + '</br>';
+                break;
+            default: ''
+                break;
+        }
+    }
+    EventUtil.addHandler(div, 'gesturestart', HandleTouchEvent);
+    EventUtil.addHandler(div, 'gesturechange', HandleTouchEvent);
+    EventUtil.addHandler(div, 'gestureend', HandleTouchEvent);
+</script>

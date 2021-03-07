@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="300" height="300">您的浏览器不支持canvas</canvas>
+</body>
+
+</html>
+<script>
+    let canvas = document.querySelector('canvas');
+    if (canvas.getContext) {
+        let ctx = canvas.getContext('2d');
+        // 移动之前的坐标
+        // 保存原始的坐标
+        ctx.save();
+        // 移动
+        ctx.translate(120, 120);
+        // draw 
+        ctx.fillRect(0, 0, 50, 50);
+        // 恢复
+        ctx.restore();
+        // draw
+        ctx.fillRect(0, 0, 50, 50);
+    }
+</script>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+  let indexedDB = window.indexedDB || window.msIndexedDB || window.mozIndexedDB || window.webkitIndexedDB;
+  // 1. 打开数据库
+  let request = indexedDB.open('userInfo', 1);
+  // 第一个参数是 数据库的名字 第二个参数是版本  如果数据库存在 则打开，如果不存在则创建再打开  indexedDB.open('userInfo', 1); 返回三个事件
+  //  error   数据库打开失败时触发
+  request.onerror = function () {
+    console.log('数据库打开失败');
+  }
+  // success  数据库打开成功时触发
+  let db;
+  request.onsuccess = function (event) {
+    db = event.target.result;
+    console.log('数据库打开成功');
+    console.log(db);
+    //2. 新建对象仓库(数据库)
+    let objectStore = db.createObjectStore('person', { keyPath: "id" });
+    // 数据库新建成功以后，新增一张叫做person的表格，主键是id。
+    //  { keyPath: "id" }是设置主键，每一个数据中 都应该有条属性作为主键 没有也可以自动生成
+    // 新建索引
+    objectStore.createIndex('name', 'name', { unique: false });
+    objectStore.createIndex('email', 'email', { unique: false });
+    // IDBObject.createIndex()的三个参数分别为索引名称、索引所在的属性、配置对象（说明该属性是否包含重复的值）。
+    // 3.新增数据  (指向仓库中添加数据 需要事务来完成)
+    function add() {
+      let request = db.transaction(['person'], 'readwrite').objectStore('person').add({
+        id: 1,
+        name: "zml",
+        age: "18",
+        sex: "man"
+      });
+      // db.transaction(['person'], 'readwrite') 是第一个参数是 表格的名字 和 操作模式（只读或读写）
+      // objectStore('person')  是 对象仓库的名字
+      // 写入数据是个异步操作 可以通过 success和 error 时间检测是否写入成功
+      request.onsuccess = function () {
+        console.log('数据写入成功');
+      }
+      request.onerror = function () {
+        console.log('数据写入失败');
+      }
+    }
+    // add();
+  }
+
+  // request.result; 拿到数据库对象
+  // upgradeneeded  如果执行的版本号 大于 创建的版本号 就会发生数据库升级事件
+  request.onupgradeneeded = function (event) {
+    db = event.target.result;
+    console.log(db);
+  }
+  // event.target.result; 可以拿到数据库实例
+
+</script>

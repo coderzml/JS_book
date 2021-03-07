@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 第一步
+    指定userData行为
+  -->
+  <div style="behavior:url(#default#userData)" id="dataStore"></div>
+</body>
+
+</html>
+<script>
+  // 获取标签 设置数据
+  let dataStore = document.querySelector('#dataStore');
+  dataStore.setAttribute('name', 'zml');
+  dataStore.setAttribute('age', '18');
+  dataStore.save('selfInfo');
+  // 拿到数据
+  dataStore.load('selfInfo');
+  console.log(dataStore.getAttribute('name'));
+  console.log(dataStore.getAttribute('age'));
+  // 删除数据
+  dataStore.removeAttribute('name');
+  dataStore.removeAttribute('age');
+  dataStore.save('selfInfo');
+</script>

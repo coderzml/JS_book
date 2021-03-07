@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="300" height="300">您的浏览器不支持canvas</canvas>
+</body>
+
+</html>
+<script>
+    let canvas = document.querySelector('canvas');
+    if (canvas.getContext) {
+        let ctx = canvas.getContext('2d');
+        // 字体的样式
+        ctx.font = '50px sans-serif';
+        // 字体的对齐方式 可选的值包括：start, end, left, right or center。 默认值是 start。
+        ctx.textAlign = 'left';
+        // 基线对齐选项 可选的值包括：top, hanging, middle, alphabetic, ideographic, bottom。默认值是 alphabetic。。
+        ctx.textBaseline = 'middle';
+        // 文字方向 可能的值包括：ltr, rtl, inherit。默认值是 inherit。
+        ctx.direction = "rtl";
+        // 绘制文字 
+        ctx.fillText('物以类聚', 10, 100);
+        // 绘制文字边框
+        ctx.strokeText('人以群分', 10, 200);
+    }
+</script>

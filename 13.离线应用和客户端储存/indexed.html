@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button class="addData">添加数据</button>
+  <button class="remove">删除数据</button>
+  <button class="clear">清空数据</button>
+</body>
+
+</html>
+<script>
+
+  let userInfo = {
+    id: 01,
+    name: "zml",
+    age: "18",
+    sex: "man"
+  }
+  let indexedDB = window.indexedDB || window.msIndexedDB || window.mozIndexedDB || window.webkitIndexedDB;
+  let request = indexedDB.open('admin', 2);
+  // dataBase 保存的就是 服务器
+  let dataBase = null;
+
+  // 请求失败
+  request.onerror = function (event) {
+    //  event.target 指的是 request  如果失败 event.target.errorCode保存的就是错误码
+    console.log(event.target.errorCode);
+    console.log('失败');
+  }
+  // 请求成功
+  request.onsuccess = function (event) {
+    // event.target 指的是 request  如果成功 event.target.result 保存的就是 数据库实例对象
+    console.log(event.target.result);
+    // dataBase = event.target.result;
+    console.log('成功');
+    // 回调函数 第一步是没设置版本号
+    // callBack();
+    // dataBase = event.target.result;
+    // let store = dataBase.createObjectStore("users", { keyPath: "id" });
+    // store.createIndex('name', 'name', { unique: false });
+    // store.createIndex('email', 'email', { unique: false });
+  }
+  request.onupgradeneeded = function (event) {
+    let dataBase = request.result;
+    console.log(dataBase);
+    let store;
+    if (!dataBase.objectStoreNames.contains('users')) {
+      store = dataBase.createObjectStore('users', { keyPath: 'id', autoIncrement: true });
+    }
+    console.log(dataBase);
+    store.createIndex('userName', 'age', { unique: false });
+    // store.createIndex('userName', 'DataName', { unique: false });
+    // store.createIndex('userEmail', 'DataEmail', { unique: false });
+  }
+  request.onVersionChange = function () {
+    console.log(44);
+    let dataBase = request.result;
+    console.log(dataBase);
+    let store;
+    if (!dataBase.objectStoreNames.contains('users')) {
+      store = dataBase.createObjectStore('users', { keyPath: 'id', autoIncrement: true });
+    }
+    console.log(dataBase);
+    store.createIndex('userName', 'age', { unique: false });
+  }
+  // 事务
+  let request1 = request;
+  let addData = document.querySelector('.addData');
+  addData.onclick = function () {
+    let dataBase = request1.result;
+    let json = {
+      id: 7,
+      name: "zml",
+      age: "20",
+      sex: "man"
+    }
+    console.log(dataBase);
+    let request = dataBase.transaction(['users'], 'readwrite').objectStore('users');
+    let res = request.add(json);
+    // request.add(json);
+    // db.transaction(['person'], 'readwrite') 是第一个参数是 表格的名字 和 操作模式（只读或读写）
+    // objectStore('person')  是 对象仓库的名字
+    // 写入数据是个异步操作 可以通过 success和 error 时间检测是否写入成功
+    res.onsuccess = function () {
+      console.log('数据写入成功');
+    }
+    request.onerror = function () {
+      console.log('数据写入失败');
+    }
+  }
+
+  // 读取数据
+  setTimeout(() => {
+    let dataBase = request1.result;
+    let request = dataBase.transaction(['users']).objectStore('users').get(1);
+    // objectStore.get()方法用于读取数据，参数是主键的值。
+    // 同样是异步操作所以可以监听是否读取成功
+    console.log(request);
+    request.onerror = function () {
+      console.log('读取数据失败');
+    }
+    request.onsuccess = function (event) {
+      let res = event.target.result;
+      // 判断request.result 是否有值
+      if (res) {
+        console.log(res);
+      } else {
+        console.log('未获得数据记录');
+      }
+    }
+  }, 300)
+  // 遍历（查询）数据
+  setTimeout(() => {
+    let dataBase = request1.result;
+    let datas = [];
+    var Range = IDBKeyRange.bound(1, 5);
+    let objectStore = dataBase.transaction('users').objectStore('users');
+    objectStore.openCursor(Range, 'prev').onsuccess = function (event) {
+      var cursor = event.target.result;
+      if (cursor) {
+        console.log(cursor.value.age);
+        console.log(cursor.value);
+        // let value = cursor.value;
+        // value.age = 20;
+        // 请求保存数据
+        // let loadData = cursor.update(value);
+        // loadData.onerror = function () {
+        //   console.log('保存数据失败');
+        // }
+        // loadData.onsuccess = function (event) {
+        //   console.log('保存数据成功');
+        //   console.log(event.target.result);
+        // }
+        datas.push(cursor.value);
+        cursor.continue();
+      } else {
+        console.log(datas);
+        console.log('没有数据了');
+      }
+    }
+  }, 300);
+  // 更新数据
+  setTimeout(() => {
+    let dataBase = request1.result;
+    let json = {
+      id: 1,
+      name: "zmll",
+    }
+    let request = dataBase.transaction(['users'], 'readwrite').objectStore('users');
+    let res = request.put(json);
+    res.onerror = function () {
+      console.log('数据更新失败');
+    }
+    res.onsuccess = function (event) {
+      console.log('数据更新成功');
+    }
+    // 如果要查看更新好的数据可以用 get获取
+    let res2 = request.get(1);
+    res2.onsuccess = function (event) {
+      console.log(event.target.result);
+    }
+    res2.onerror = function (event) {
+      console.log('更新后的数据获取失败');
+    }
+  }, 300)
+
+  // 删除数据
+  let removeClick = document.querySelector('.remove');
+  removeClick.onclick = function () {
+    // setTimeout(() => {
+    let dataBase = request1.result;
+    let request = dataBase.transaction(['users'], 'readwrite').objectStore('users').delete(1);
+    request.onsuccess = function () {
+      console.log('数据删除成功');
+    }
+    // }, 300)
+  }
+  // 查找索引
+  // setTimeout(() => {
+  //   let dataBase = request1.result;
+  //   let request = dataBase.transaction(['users'], 'readwrite').objectStore('users').index('name').get('zmll');
+  //   request.onsuccess = function (event) {
+  //     let result = event.target.result;
+  //     console.log(result);
+  //   }
+  // }, 300)
+  // 查找范围
+  setTimeout(() => {
+    let dataBase = request1.result;
+    let store = dataBase.transaction(['users'], 'readwrite').objectStore('users');
+    let renge = IDBKeyRange.upperBound('sex');
+    let request = store.openCursor(renge);
+    request.onsuccess = function (event) {
+      let cursor = event.target.result;
+      if (cursor) {
+        console.log(cursor.value);
+        cursor.continue();
+      } else {
+        console.log('done');
+      }
+    }
+    request.onerror = function (event) {
+      console.log('查找范围失败');
+    }
+  }, 300)
+  // 使用索引
+
+  // setTimeout(() => {
+  //   let dataBase = request1.result;
+  //   var transaction = dataBase.transaction(['users'], 'readwrite');
+  //   var objStore = transaction.objectStore('users');
+  //   var keyRange = IDBKeyRange.only("20");
+  //   var req = objStore.index('userName').openCursor(keyRange);
+  //   res.onsuccess = function (event) {
+  //     let res = event.target.result;
+  //     console.log(res);
+  //     if (res) {
+  //     }
+  //   };
+  // }, 300)
+
+  // 清空所有数据
+  let clear = document.querySelector('.clear');
+  clear.onclick = function () {
+    let dataBase = request1.result;
+    let result = dataBase.transaction(['users'], 'readwrite').objectStore('users');
+    let rep = result.clear();
+    rep.onsuccess = function () {
+      console.log('清空所有数据');
+    }
+  }
+
+</script>

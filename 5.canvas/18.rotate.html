@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="300" height="300">您的浏览器不支持canvas</canvas>
+</body>
+
+</html>
+<script>
+    let canvas = document.querySelector('canvas');
+    if (canvas.getContext) {
+        let ctx = canvas.getContext('2d');
+        // 定义一个颜色 并保存
+        ctx.fillStyle = 'red';
+        ctx.save();
+        // 改变位置
+        ctx.translate(100, 100);
+        // 旋转
+        // ctx.rotate(Math.PI / 180 * 20);
+        ctx.scale(1.5, 1.5);
+        // 又定义一个颜色
+        ctx.fillStyle = 'blue';
+        ctx.fillRect(0, 0, 100, 100);
+        // 恢复 并画
+        ctx.restore();
+        ctx.fillRect(0, 0, 50, 50);
+    }
+</script>

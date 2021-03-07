@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="#">
+        <input type="text" name="tel1" id="txtTel1" maxlength="3">
+        <input type="text" name="tel2" id="txtTel2" maxlength="3">
+        <input type="text" name="tel3" id="txtTel3" maxlength="4">
+    </form>
+</body>
+
+</html>
+<script>
+    let input1 = document.forms[0].elements[0];
+    let input2 = document.forms[0].elements[1];
+    let input3 = document.forms[0].elements[2];
+    // 第一次写
+    // input1.addEventListener('input', function (e) {
+    //     if (this.value.length == this.maxLength) {
+    //         input2.focus();
+    //     }
+    // })
+    // input2.addEventListener('input', function () {
+    //     if (this.value.length == this.maxLength) {
+    //         input3.focus();
+    //     }
+    // })
+    // 第二次优化写
+    for (let i = 0; i < document.forms[0].elements.length; i++) {
+        document.forms[0].elements[i].addEventListener('input', function (e) {
+            if (this.value.length == this.maxLength) {
+                if (document.forms[0].elements.length > i + 1) {
+                    document.forms[0].elements[i + 1].focus();
+                }
+            }
+        });
+    }
+    // input1.addEventListener('keyup', autoNextForm);
+    // input2.addEventListener('keyup', autoNextForm);
+    // input3.addEventListener('keyup', autoNextForm);
+    // // 老师的代码
+    // function autoNextForm(event) {
+    //     // 1.判断keyup的value是否等于最大长度
+    //     let target = event.target;
+    //     if (target.value.length == target.maxLength) {
+    //         // 如果等于就继续进行下一个
+    //         // 先找到所属的form表单
+    //         let form = target.form;
+    //         for (let i = 0; i < form.elements.length; i++) {
+    //             // 元素等于目标元素就让下一个获得焦点
+    //             if (form.elements[i] == target) {
+    //                 form.elements[i + 1].focus();
+    //             }
+    //         }
+    //     }
+    // }
+</script>

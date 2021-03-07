@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    canvas {
+      /* border: 1px solid #000; */
+      background: #000;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas width="500" height="500">您的浏览器不支持canvas</canvas>
+</body>
+
+</html>
+<script>
+  function draw9() {
+    // 找到canvas对象
+    var ctx = document.querySelector('canvas').getContext('2d');
+    // 新图像在老图像下面
+    // ctx.globalCompositeOperation = 'destination-over';
+    // 动画的第一步永远都是清除画布的内容
+    ctx.clearRect(0, 0, 500, 500); // clear canvas
+    // 定义颜色
+    ctx.fillStyle = 'green';
+    ctx.strokeStyle = 'blueviolet';
+    // 保存颜色
+    ctx.save();
+    // 移动坐标位置
+    ctx.translate(180, 180);
+    // 创建一条信线
+    ctx.beginPath();
+    // 画一个圆框
+    ctx.arc(0, 0, 150, 0, Math.PI * 2, false);
+    ctx.stroke();
+    // 获取时间对象 （这个操作应该是做运动）
+    var time = new Date();
+    ctx.rotate(((2 * Math.PI) / 60) * time.getSeconds() + ((2 * Math.PI) / 60000) * time.getMilliseconds())
+    // 再创建一条线 画个球
+    ctx.beginPath();
+    ctx.arc(0, 150, 20, 0, Math.PI * 2, false);
+    ctx.fill();
+    // 闭合线
+    ctx.closePath();
+    // 恢复
+    ctx.restore();
+    window.requestAnimationFrame(draw9)
+  }
+  window.requestAnimationFrame(draw9);
+</script>

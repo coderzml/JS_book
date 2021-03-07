@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button>点击</button>
+</body>
+
+</html>
+<script>
+  document.querySelector('button').onclick = function () {
+    // 创建socket 
+    let socket = new WebSocket('ws://localhost/2021-2-21%20Comet/data.php');
+    // 发送数据
+    console.log(socket);
+    socket.send('hello');
+    // 获取数据
+    socket.onmessage = function (event) {
+      let data = event.data;
+      console.log(data);
+    }
+    // 其他三个事件
+    socket.onopen = function () {
+      console.log('成功建立连接');
+    }
+    socket.onerror = function () {
+      console.log('建立连接失败');
+    }
+    socket.onclose = function (event) {
+      console.log('连接关闭');
+      console.log(event.wasClean);
+      console.log(event.code);
+      console.log(event.reason);
+    }
+    // 这三个事件中只有close事件有event对象，其中包含三个信息 wasClean、code、reason。wasClean 是一个布尔值，表示连接是否正确关闭，code是服务器返回的状态码，reason 是一个字符串 包含服务器返回的信息，可以把这个信息显示给用户 ， 月可以记录到日志 以便将来分析
+  };
+</script>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>关闭页面查看效果</p>
+</body>
+
+</html>
+<script src="./EventUtil.js"></script>
+<script>
+    EventUtil.addHandler(window, 'beforeunload', function (event) {
+        event = EventUtil.getEvent(event);
+        let massage = '你确定要关闭页面吗？';
+        // 设置值
+        event.returnValue = massage;
+        // 并返回
+        return massage;
+    })
+</script>

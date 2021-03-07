@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>是的你没有看错, 我还是在路边吃快餐, 在北京市的三里屯, 在上海市的外滩</p>
+</body>
+<script>
+    // 检测整个页面的复制操作还是检测某些元素的复制操作取决与需求
+    document.addEventListener('copy', function (event) {
+        // 找到复制的内容 兼容处理
+        let clipboardData = event.clipboardData || window.clipboardData;
+        // 把复制的内容存到变量里 记得传为字符串
+        let str = window.getSelection().toString();
+        console.log(str);
+        // 如果没有复制或者没有剪贴  就不往下执行了
+        if (!str) {
+            return false;
+        }
+        // 如果复制的有内容 设置要粘贴的内容
+        if (str) {
+            event.preventDefault();
+            clipboardData.setData('text/plain', str + 'coderzml 版权所有');
+        }
+    });
+
+
+
+
+
+</script>
+
+</html>

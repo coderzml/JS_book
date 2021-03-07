@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="300" height="300">您的浏览器不支持canvas</canvas>
+</body>
+
+</html>
+<script>
+    let canvas = document.querySelector('canvas');
+    if (canvas.getContext) {
+        let ctx = canvas.getContext('2d');
+        // 绘制第一次矩形
+        ctx.fillRect(10, 10, 50, 50);
+        // 保存第一次状态  
+        ctx.save();
+        // 绘制第二个矩形
+        ctx.fillStyle = "#f00";
+        ctx.fillRect(10, 60, 50, 50);
+        // 保存第二次状态
+        ctx.save();
+        // 绘制第三个矩形
+        ctx.fillStyle = 'blue';
+        ctx.fillRect(10, 110, 50, 50);
+        // 不保存的情况下绘制第四个矩形 用的颜色应该是blue
+        ctx.fillRect(10, 160, 50, 50);
+        // 还原一次颜色 现在是红色
+        ctx.restore();
+        ctx.fillRect(70, 10, 50, 50);
+        // 再还原一次 应该是 黑色 default
+        ctx.restore();
+        ctx.fillRect(70, 60, 50, 50);
+    }
+</script>

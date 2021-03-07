@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        iframe {
+            width: 150px;
+            height: 150px;
+        }
+
+        div {
+            width: 150px;
+            height: 150px;
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <form action="#"></form> -->
+    <iframe src="./src.html" frameborder="1" name="richedit"></iframe>
+    <!-- <div contenteditable="true">我是可编辑文字</div> -->
+    <!-- <input type="text"> -->
+</body>
+
+</html>
+
+<script>
+    window.onload = function () {
+        // window.frames.richedit.document.designMode = 'on';
+        window.frames['richedit'].document.designMode = 'on';
+        // let div = document.querySelector('div');
+        // console.log(div.toString());
+    }
+</script>

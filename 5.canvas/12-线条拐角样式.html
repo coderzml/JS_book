@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="300px" height="300px">您的浏览器不支持canvas绘图</canvas>
+</body>
+
+</html>
+<script>
+    let canvas = document.querySelector('canvas');
+    if (canvas.getContext) {
+        let ctx = canvas.getContext('2d');
+        let lineJoin = ['round', 'bevel', 'miter'];
+        // 使用循环画出三个W 可以清除的看到拐角的样式
+        for (let i = 0; i < 3; i++) {
+            ctx.beginPath();
+            ctx.moveTo(50, 50 + 70 * i);
+            ctx.lineTo(100, 100 + 70 * i);
+            ctx.lineTo(150, 50 + 70 * i);
+            ctx.lineTo(200, 100 + 70 * i);
+            ctx.lineTo(250, 50 + 70 * i);
+            ctx.lineWidth = 20;
+            // 线条拐角样式
+            ctx.lineJoin = lineJoin[i];
+            ctx.stroke();
+        }
+    }
+</script>

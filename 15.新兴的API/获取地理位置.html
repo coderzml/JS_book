@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    let obj = {};
+    // getCurrentPosition 调用后就会触发用户地址请求对话框
+    // 第一个参数是 成功后的回调函数
+    // 第二个参数是 失败后的回调函数
+    // 第三个参数是 配置对象
+    navigator.geolocation.getCurrentPosition(function (position) {
+        // console.log(position);
+        obj.x = position.coords.latitude;
+        obj.y = position.coords.longitude;
+        // drawMapCenteredAt(position.coords.latitude, position.coords.longitude);
+        p.innerHTML = position;
+    }, function (error) {
+        obj.code = error.code;  // 错误码 1代表用户拒绝 2代表 位置无效 3代表超时
+        obj.message = error.message;  // 错误信息
+        console.log(error.code);
+        console.log(error.message);
+        load();
+    }, {
+            enableHighAccuracy: true, // 是否要精确定位 默认false 省电
+            timeout: 5000, // 超时时间
+            maximumAge: 25000,// 坐标的有效时间
+        });
+
+    //  渲染
+    function load() {
+        let ul = document.createElement('ul');
+        for (const key in obj) {
+            let li = document.createElement('li');
+            li.innerHTML = key + ':' + obj[key];
+            ul.appendChild(li);
+        }
+        document.body.appendChild(ul);
+    }
+</script>

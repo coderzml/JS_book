@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <a href="https://www.baidu.com">baidu</a> -->
+    <!-- 我这一行干啥傻逼了吧，检测的是本页面的url 我改a标签的href属性有个蛋用！！！！！ -->
+    <button>点击修改URL</button>
+</body>
+
+</html>
+<script>
+    document.querySelector('button').addEventListener('click', function () {
+        // 用location改url
+        location.hash = "part5";
+    })
+    window.addEventListener('hashchange', function (e) {
+        console.log(e.oldURL);
+        console.log(e.newURL);
+    });
+</script>

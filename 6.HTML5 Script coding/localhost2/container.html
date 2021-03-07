@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        iframe {
+            border: 1px solid #f00;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>页面A</h3>
+    <input type="text" class="text">
+    <input type="button" value="send" onclick="pageA()" class="send">
+    <br>
+    <br>
+    <iframe src=" http://127.0.0.1:5500/localhost2/A.html" frameborder="0"></iframe>
+    <p></p>
+
+    <h3>页面B</h3>
+    <input type="text" class="text">
+    <input type="button" value="send" onclick="pageB()" class="send">
+    <br>
+    <br>
+    <iframe src=" http://127.0.0.1:5500/localhost2/B.html" frameborder="0"></iframe>
+    <p></p>
+
+    <h3>页面C</h3>
+    <input type="text" class="text">
+    <input type="button" value="send" onclick="pageC()" class="send">
+    <br>
+    <br>
+    <iframe src="http://127.0.0.1:5500/localhost2/C.html" frameborder="0"></iframe>
+    <p></p>
+</body>
+
+</html>
+<script>
+    let spans = document.querySelectorAll('p');
+    let iframe = document.querySelectorAll('iframe');
+    let input = document.querySelectorAll('.text');
+
+    function pageA() {
+        iframe[0].contentWindow.postMessage(input[0].value, 'http://127.0.0.1:5500/localhost2/A.html');
+    }
+    function pageB() {
+        iframe[1].contentWindow.postMessage(input[1].value, 'http://127.0.0.1:5500/localhost2/B.html');
+    }
+    function pageC() {
+        iframe[2].contentWindow.postMessage(input[2].value, 'http://127.0.0.1:5500/localhost2/C.html');
+    }
+    // 这里接受的数据 应该不重复才对 尝试返回一个数组
+    window.onmessage = function (event) {
+        let data = JSON.parse(event.data);
+        console.log(data);
+        if (data.origin == 'http://127.0.0.1:5500/localhost2/A.html') {
+            spans[0].innerHTML = '消息已收到,内容：' + data.data + ',来源：' + data.origin;
+        } else if (data.origin == 'http://127.0.0.1:5500/localhost2/B.html') {
+            spans[1].innerHTML = '消息已收到,内容：' + data.data + ',来源：' + data.origin;
+        } else if (data.origin == 'http://127.0.0.1:5500/localhost2/C.html') {
+            spans[2].innerHTML = '消息已收到,内容：' + data.data + ',来源：' + data.origin;
+        }
+    }
+</script>

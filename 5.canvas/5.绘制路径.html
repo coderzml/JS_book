@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <canvas id="drawing" width="200" height="200">Your browser doesn't support the canvas tag.</canvas>
+</body>
+
+</html>
+<script>
+    window.onload = function () {
+        let canvas = document.querySelector('canvas');
+        if (canvas.getContext) {
+            let context = canvas.getContext('2d');
+            // 开始绘制
+            context.beginPath();
+            // 绘制外圆
+            // X，Y，半径，起始位置，结束位置，顺逆时针
+            // 以X，Y为中心开始绘制圆，从0弧度开始绘制，绘制2PI，就得到了一个圆，最后顺时针是false
+            context.arc(100, 100, 99, 0, 2 * Math.PI);
+            // 绘制内圆
+            // 1.移动游标
+            context.moveTo(194, 100);
+            // 绘制圆
+            context.arc(100, 100, 94, 0, 2 * Math.PI);
+            // 绘制分针
+            context.moveTo(100, 100);
+            context.lineTo(100, 15);
+            // 绘制时针
+            context.moveTo(100, 100);
+            context.lineTo(35, 100);
+            // 描边路径
+            context.stroke();
+        }
+    }
+</script>

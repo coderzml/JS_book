@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+  let img = new Image();
+  img.src = 'http://www.dmoe.cc/random.php';
+  img.onload = function () {
+    alert('done');
+  }
+  img.onerror = function () {
+    alert('eroor');
+  }
+  document.body.appendChild(img);
+</script>

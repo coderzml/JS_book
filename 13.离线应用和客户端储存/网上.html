@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+  var request = indexedDB.open('aaa', 2);
+  console.log(request);
+  request.onsuccess = function () {
+    console.log('数据库创建成功');
+  }
+  request.onerror = function () {
+    console.log('数据库创建失败');
+  }
+  request.onupgradeneeded = function () {
+    var db = request.result;
+    db.createObjectStore('test1', { keyPath: "id" });
+    // console.log('版本号升级了');
+  }
+  var json = {
+    "id": 1,
+    "name": "zml",
+    "age": "15"
+  }
+  setTimeout(() => {
+
+    var db = request.result;
+    var transaction = db.transaction('test1', 'readwrite');
+    var store = transaction.objectStore('test1');
+    store.add(json)
+
+  }, 300)
+</script>

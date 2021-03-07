@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>有一种无论如何命名都不会冲突的方式</p>
+</body>
+
+</html>
+<script>
+    // 声明： 最大的命名空间为 zml （可以是开发代码公司的名字）
+    let zml = {};
+    // 创建命名空间
+    let detail = {};
+    // 添加属性到zml
+    zml.detail = {
+        name: "zml",
+        age: "20",
+        sex: "man"
+    };
+    // 访问
+    console.log(zml.detail.name);
+    // 继续开辟命名空间
+    let home = {};
+    // 添加属性
+    zml.home = {
+        name: "wqq",
+        age: "19",
+        sex: "woman"
+    };
+    //  访问属性  同为name但是不重复 不影响
+    console.log(zml.detail.name);
+    console.log(zml.home.name);
+</script>

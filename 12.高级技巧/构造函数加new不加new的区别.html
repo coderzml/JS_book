@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+  function Self(name, age, sex) {
+    if (this instanceof Self) {
+      this.name = name;
+      this.age = age;
+      this.sex = sex;
+    } else {
+      return new Self(name, age, sex);
+    }
+  }
+  let person2 = Self('zmll', '20', 'man');
+  console.log(person2.name); // zmll
+</script>

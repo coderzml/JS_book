@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <canvas id="drawing" width="200" height="200">Your browser doesn't support the canvas tag.</canvas>
+</body>
+
+</html>
+<script>
+    window.onload = function () {
+        let canvas = document.querySelector('canvas');
+        //获取canvas对象
+        if (canvas.getContext) {
+            let context = canvas.getContext('2d');
+            // 绘制红色矩形
+            context.fillStyle = 'red';
+            context.fillRect(10, 10, 50, 50);
+            // 绘制蓝色矩形
+            context.fillStyle = 'rgba(0,0,255,0.5)';
+            context.fillRect(30, 30, 50, 50);
+            //  清除矩形
+            context.clearRect(30, 40, 20, 20);
+
+        }
+
+    }
+</script>

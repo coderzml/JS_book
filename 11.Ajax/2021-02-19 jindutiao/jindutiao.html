@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button>点击发送数据</button>
+  <div class="jindu_Show">进度</div>
+</body>
+
+</html>
+<script>
+  document.querySelector('button').onclick = function () {
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {
+        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+          console.log(xhr.responseText);
+        } else {
+          alert('request error');
+        }
+      }
+    }
+
+    // 进度条事件
+    xhr.onprogress = function (event) {
+      console.log(event);
+      console.log(event.lengthComputable);
+      console.log(event.position);
+      console.log(event.position);
+      let jindu_Show = document.querySelector('.jindu_Show');
+      if (event.lengthComputable) {
+        jindu_Show.innerHTML = '总字节：' + event.position + ',' + '已上传字节' + event.position;
+      }
+    }
+    xhr.open('post', './data.php?name=value', true);
+    // 大文件 延迟上传速度
+    function bigFile() {
+
+      let str = 'x';
+      for (let i = 0; i < 10000; i++) {
+        str += 'x';
+      }
+      return str;
+    }
+
+    xhr.send(null);
+  }
+</script>

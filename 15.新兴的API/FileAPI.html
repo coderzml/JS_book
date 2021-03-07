@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="file" class="files" multiple="multiple">
+    <button class="clearReader">取消读取</button>
+    <!-- <p>进度 <span class="progress"></span></p>
+    <div class="content"></div> -->
+</body>
+
+</html>
+<script>
+    // 获取文件信息
+    let files = document.querySelector('.files');
+    files.onchange = function (event) {
+        console.log(event.target.files);
+        // console.log('name ：' + event.target.files[0].name); 文件名
+        // console.log('size ：' + event.target.files[0].size); 文件大小
+        // console.log('type ：' + event.target.files[0].type); 文件类型
+        // console.log('time ：' + event.target.files[0].lastModifiedDate); 文件获取时间 目前只有google实现了
+        let data = event.target.files;
+        for (let i = 0; i < data.length; i++) {
+            for (let y in data[i]) {
+                console.log(y + ':' + data[i][y]);
+            }
+            console.log('---------------------------');
+            loadFiles(data, i);
+        }
+
+    }
+    // 读取文件内容
+    function loadFiles(data, i) {
+        // 异步读取对象  
+        let reader = new FileReader();
+        // 三个属性
+        // readAsText(file,encoding)  纯文本形式读取文件，读取到的文本保存到result中（result在异步事件中的evnet里），第一个属性就是读取到的文件 data[0]，第二个参数是 编码类型 可选
+        //readAsDataURL(file) 读取的文件以数据URL的形式保存到 result中
+        //readAsBinaryString(file) 字符串的形式保存到result中
+        //readAsArrayBuffer(file)  读取文件将以一个包含文件内容的ArrayBuffer 保存在result中
+        // 三个事件
+        // progress 是否又读取了新数据（50ms执行一次）
+        // 属性 ↓ 
+        // ------ lengthComputable 
+        // ------ loaded
+        // ------ total
+        // load 获取成功事件 成功后文件在 reader.result中
+        // error 获取失败事件 注意：错误码在 reader.error.code
+        console.log(data);
+        // 添加属性 -------------------------------------------- 这个地方注意一下 看渲染需要什么格式 去针对格式写类型
+        // 根据不同文件格式添加不同的属性
+        let type = 'default';
+        if (/image/.test(data[i].type)) {
+            reader.readAsDataURL(data[i]);
+            type = 'image';
+        } else if (/text/.test(data[i].type)) {
+            reader.readAsText(data[i]);
+            type = 'text';
+        }
+        // 添加事件
+        // 进度事件
+        reader.onprogress = function (event) {
+            console.log(event);
+            console.log(event.lengthComputable); // 是否可计算
+            console.log(event.loaded);  // 加载
+            console.log(event.total); // 总计
+            // 渲染进度
+            // let progress = document.querySelector('.progress');
+            // progress.innerHTML = '加载：' + event.loaded + ',总计：' + event.total;
+            let p = document.createElement('p');
+            p.innerHTML = '加载：' + event.loaded + ',总计：' + event.total;
+            document.body.appendChild(p);
+        }
+        // 报错事件
+        reader.onerror = function () {
+            console.log('读取错误 code：' + reader.error.code);
+            // code 错误码
+            // 1 表示 未找到文件
+            // 2 表示 安全性错误
+            // 3 表示 读取中断
+            // 4 表示 文件不可读
+            // 5 表示编码错误
+        }
+        // 成功事件
+        reader.onload = function () {
+            console.log(reader.result);
+            // 成功后渲染页面
+            let html;
+            // let content = document.querySelector('.content');
+            //  为什么要这样写呢？reader.result 是文字的时候，渲染文字没问题，但是reader.result是URL的话 没有img标签去承载
+            switch (type) {
+                case 'image':
+                    html = '<img src=' + reader.result + '></img>';
+                    break;
+                case 'text':
+                    html = reader.result;
+                    break;
+            }
+            // content.innerHTML = html;
+            let div = document.createElement('div');
+            div.innerHTML = html + '<br>' + '↑ ----------------------';
+            document.body.appendChild(div);
+
+        }
+        // 如果在读取过程中使用abort 可以取消读取。
+        // 在error，load，abort 都会触发 loadend事件 代表 要么出错，要么成功，要么取消
+        let clearReader = document.querySelector('.clearReader');
+        clearReader.onclick = function () {
+            reader.abort();
+        }
+        // 触发 loadend事件
+        reader.onloadend = function (event) {
+            // console.log(event);
+            // alert('下一步操作');
+        }
+    }
+
+</script>

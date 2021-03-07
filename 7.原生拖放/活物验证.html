@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            float: left;
+            width: 300px;
+            height: 300px;
+            border: 1px solid #000;
+            text-align: center;
+            line-height: 300px;
+            font-size: 24px;
+        }
+
+        img {
+            width: 150px;
+        }
+
+        .green {
+            background-color: green;
+        }
+
+        .red {
+            background-color: red;
+        }
+
+        span {
+            font-weight: 700;
+        }
+
+        .clear {
+            clear: both;
+        }
+    </style>
+</head>
+
+<body>
+    <p>请将 <span class="randomFruit"></span> 拖到指定文本框</p>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+
+    <div class="clear">
+        <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4273527509,2197148859&fm=26&gp=0.jpg" alt=""
+            draggable="true" class="img">
+        <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=693640337,3763676109&fm=15&gp=0.jpg" alt=""
+            draggable="true" class="img2">
+        <img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=324081071,88089415&fm=26&gp=0.jpg" alt=""
+            draggable="true" class="img3">
+        <img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2656686416,2714726200&fm=26&gp=0.jpg" alt=""
+            draggable="true" class="img4">
+
+    </div>
+</body>
+
+</html>
+<script>
+    // 前言：
+    // 拖动水果到指定的区域验证。
+    // 重点：
+    // 1.分清哪些是拖动元素事件  哪些  是目标元素事件
+    // 2.对 dataTransfer的setData和getData进行练习
+    // 1.设置标签为可移动
+    // 2.拖动开始时设置属性
+    let img = document.querySelectorAll('img');
+    let div = document.querySelectorAll('.box');
+    let randomFruit = document.querySelector('.randomFruit');
+
+    // 随机给一个div添加red颜色
+    let fruit = ['苹果', '香蕉', '菠萝', '橘子'];
+    let randomColor = Math.floor(Math.random() * 4);
+    div[randomColor].innerHTML = fruit[randomColor];
+    randomFruit.innerHTML = fruit[randomColor];
+    // 循环操作对所有 拖放目标和放置目标进行事件的绑定
+    for (let i = 0; i < div.length; i++) {
+        // 设置vlaue值后面用于验证
+        img[i].setAttribute('value', fruit[i]);
+        // 开始拖动时
+        img[i].ondragstart = function (event) {
+            // 设置类名
+            let getValue = this.getAttribute('value');
+            // 设置setData要传输值
+            event.dataTransfer.setData('text', JSON.stringify([this.className, getValue]));
+        }
+        // 3.鼠标划上 设置可放置图标 
+        div[i].ondragover = function (event) {
+            // 默认是不可纺织的，只需禁止事件对象的默认行为即可
+            event.preventDefault();
+        }
+        // 4.设置目标元素为可放置区域
+
+        div[i].ondrop = function (event) {
+            event.preventDefault();
+            // 解析数据
+            let datas = event.dataTransfer.getData('text');
+            datas = JSON.parse(datas);
+            let className = datas[0];
+            let value = datas[1];
+            let divStr = this.innerHTML;
+            console.log(value, divStr);
+            // 移动元素  event.target 代表元素本身 而不是body元素(也可以用this)
+            console.log(event.target);
+            event.target.appendChild(document.querySelector('.' + className));
+            // 验证 拖放时传输过来的值 和 div内随机分类的值相等 代表验证通过
+            if (value == divStr) {
+                this.classList.add('green');
+                setTimeout(() => {
+                    alert('验证通过');
+                    // 这里验证完毕活物就可以进行跳转页面或者其他操作
+                }, 200);
+            } else {
+                this.classList.add('red');
+                setTimeout(() => {
+                    alert('验证失败');
+                    // 刷新页面
+                    window.location.reload();
+                }, 200);
+
+            }
+        }
+    }
+</script>

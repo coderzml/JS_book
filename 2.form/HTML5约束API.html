@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="#" method="GET">
+        <input type="text" reqiured> 必填项
+        <input type="email"> 邮箱
+        <input type="url"> url
+        <input type="number" min="0" max="100" step="5"> 数值5的倍数
+        <input type="text" pattern="\d+"> 数字
+        <input type="submit" value="提交" name="submit">
+        <input type="submit" value="提交" name="submit" formnovalidate>
+    </form>
+</body>
+
+</html>
+<script>
+    let isReqiured = document.forms[0].elements[0].reqiured;
+    console.log(isReqiured);
+    document.forms[0].elements['submit'].onclick = function () {
+
+        // if (document.forms[0].checkValidity()) {
+        //     // 有效 继续执行
+        //     alert('有效');
+        // } else {
+        //     // 无效
+        //     alert('无效');
+        // }
+        let input = document.forms[0].elements[0];
+        // 这行的意思是 ： 
+        if (input.validity && !input.validity.valid) {
+            // 如果标注了reqiured的字符按没有值返回true
+            console.log(1);
+            if (input.validity.valueMissing) {
+                alert('没有值');
+            }
+        }
+    }
+</script>

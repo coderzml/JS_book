@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    // 创建workers对象  这行代码会下载JS代码 但是不会执行
+    let worker = new Worker('./data.js');
+    console.log(worker);
+
+    // 只有在 worker接收到消息的时候 JS 文件才会执行  参数可以是任何可以被序列化的值
+    worker.postMessage({
+        name: "zml",
+        age: "20"
+    });
+    // 两个事件 onmessage成功事件 数据在event.data里 error事件 event对象里的三个属性 filename，lineno，message 分别代表发生错误的文件名、代码行号，完整的错误信息。
+    worker.onmessage = function (event) {
+        console.log(event.data);
+
+    }
+    worker.onerror = function (event) {
+        console.log(evnet);
+
+    }
+// worker.terminate(); 立即停止worker工作
+</script>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .dropTarget {
+            width: 500px;
+            height: 500px;
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dropTarget"></div>
+</body>
+
+</html>
+<script>
+    let dropTarget = document.querySelector('.dropTarget');
+    dropTarget.ondrop = handelEvent;
+    dropTarget.ondragover = handelEvent;
+    dropTarget.ondragenter = handelEvent;
+    function handelEvent(event) {
+        // 阻止默认事件
+        event.preventDefault();
+        console.log(event);
+        if (event.type == 'drop') {
+            let files = event.dataTransfer.files;
+            console.log(files);
+            let html;
+            for (let i in files[0]) {
+                html += files[0][i] + '</br>';
+            }
+            dropTarget.innerHTML = html;
+        }
+    }
+</script>

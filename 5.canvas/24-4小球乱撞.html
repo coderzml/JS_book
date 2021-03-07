@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            position: relative;
+            width: 800px;
+            height: 800px;
+            background: rgba(200, 200, 200, 0.5);
+            z-index: 2;
+        }
+
+        .radio {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            border-radius: 50%;
+            z-index: 1;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+    </div>
+    <div class="radio"></div>
+</body>
+
+</html>
+<script>
+    // 跟随位置不对  感觉是因为获取的太快了 没到正确的位置就赋值了
+    let box = document.querySelector('.box');
+    let radio = document.querySelector('.radio');
+    // 定义一些基本参数 
+    let ball = {
+        running: false,
+        // x: 5,
+        y: 5,
+        flag: false,
+    }
+    // 首先第一个功能 小球跟着鼠标跑
+    box.addEventListener('mousemove', function (e) {
+        if (!ball.running) {
+            radio.style.left = e.offsetX - 50 + 'px';
+            radio.style.top = e.offsetY - 50 + 'px';
+        }
+    });
+    // 第二个功能 点击松手 球会自由落体 然后乱撞
+    let timer;
+    let num = 1;
+    box.addEventListener('click', function (e) {
+        radio.style.transition = '0.2s';
+        if (!ball.running) {
+            timer = setInterval(function () {
+                num++;
+                radio.style.transform = 'translate(0' + ',' + ball.y * num + 'px' + ')';
+                if (ball.y * num + e.offsetY > box.clientHeight - 50 || ball.y * num + e.offsetY < 0) {
+                    //目前已经超过最大范围
+                    // 达到乱撞的效果 
+                    // 生成随机数 让随机数 x num
+                    radio.style.transform = 'translate(' + ball.y * -120 + 'px' + ',' + ball.y * -120 + 'px' + ')';
+                }
+                if (ball.y * num + e.offsetX > box.clientHeight - 50 || ball.y * num + e.offsetX < 0) {
+                    //目前已经超过最大范围
+                    // 达到乱撞的效果 
+                    // 生成随机数 让随机数 x num
+                    radio.style.transform = 'translate(' + ball.y * -120 + 'px' + ',' + ball.y * -120 + 'px' + ')';
+                }
+            }, 50);
+        }
+        ball.running = true;
+    });
+    box.addEventListener('mouseout', function (e) {
+        ball.running = false;
+    });
+</script>

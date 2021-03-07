@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="file" name="file" id="file">
+</body>
+
+</html>
+<script>
+    let file = document.querySelector('#file');
+    file.onchange = function (event) {
+        let data = event.target.files;
+        console.log(data);
+        // 直接获取url字符串 不需要设置格式
+        let url = window.URL.createObjectURL(data[0]);
+        if (url) {
+            if (/image/.test(data[0].type)) {
+                let img = document.createElement('img');
+                img.src = url;
+                document.body.appendChild(img);
+            } else {
+                console.log('不是img格式');
+            }
+        } else {
+            console.log('文件出错');
+        }
+    }
+</script>

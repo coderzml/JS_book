@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="https://baidu.com">百度</a>
+</body>
+
+</html>
+<script src="../EventUtil.js"></script>
+<script>
+    // 小闭包 私有作用域（可以防止变量进去全局作用域）
+    (function () {
+        let showCount = 0;
+        EventUtil.addHandler(window, 'load', function () {
+            console.log('laod done');
+        });
+        // 事件
+        EventUtil.addHandler(window, 'pageshow', function (event) {
+            event = EventUtil.getEvent(event);
+            showCount++;
+            console.log(showCount);
+            console.log(event.persisted);
+
+        })
+    })()
+</script>

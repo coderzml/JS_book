@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas width="500" height="500"></canvas>
+</body>
+
+</html>
+<script>
+    let canvas = document.querySelector('canvas');
+    if (canvas.getContext) {
+        let ctx = canvas.getContext('2d');
+        // 渐变由 createLinearGradient  实现 四个参数 前两个是起始点 后两个是结束点  
+        // 尽量保证渐变范围的大小 和 画的矩形应用的 大小一样
+        let jianbian = ctx.createLinearGradient(10, 10, 150, 150);
+
+        // addColorStop 接收两个参数: 0 开始颜色 || 1 结束的颜色
+        jianbian.addColorStop(0, 'red');
+        jianbian.addColorStop(1, 'blue');
+        // 赋值给fillStyle 就可以画出矩形 或者 边框了
+        ctx.fillStyle = jianbian;
+        ctx.fillRect(10, 10, 150, 150)
+        ctx.strokeStyle = jianbian;
+        ctx.strokeRect(150, 150, 150, 150);
+    }
+</script>

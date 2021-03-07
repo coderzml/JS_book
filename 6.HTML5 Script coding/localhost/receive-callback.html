@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="button" value="Cross domain call" onclick="sendMsg();" />
+    <p></p>
+</body>
+
+</html>
+<script>
+    // onmessage事件接收 传输的消息
+    window.addEventListener("message", receiveMessage, false);
+    let thet;
+    function receiveMessage(evt) {
+        console.log("origin:", evt.origin);
+        console.log("data:", evt.data);
+        document.querySelector('p').innerHTML = '我是传递过来的内容：' + evt.data;
+        thet = evt;
+    }
+    // 点击按钮后 回调 消息 注意事项 同发送时
+    function sendMsg() {
+        thet.source.postMessage('消息已收到', 'http://127.0.0.1:5500/localhost/send.html');
+    }
+</script>

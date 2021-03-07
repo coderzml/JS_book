@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+  try {
+    test();
+  } catch (error) {
+    // 定义throw的类型
+    // throw 123;
+    throw new TypeError('i dont no');
+    // 可以 抛出的错误类型
+    throw new SyntaxError('Error message');
+    throw new TypeError('Error message');
+    throw new RangeError('Error message');
+    throw new EvalError('Error message');
+    throw new ReferenceError('Error message');
+    throw new URIError('Error message');
+    function test(arr) {
+      // 加个判断 抛出错误
+      if (!(arr instanceof Array)) {
+        throw new TypeError('argument not is Array'); // 参数不是数组
+      }
+      let arr2 = arr.sort();
+      // …… 代码块 
+    }
+    test('123456789');
+  }
+</script>

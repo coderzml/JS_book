@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="300px" height="300px">您的浏览器不支持canvas绘图</canvas>
+</body>
+
+</html>
+<script>
+    let canvas = document.querySelector('canvas');
+    if (canvas.getContext) {
+        let ctx = canvas.getContext('2d');
+        // 虚线 参数： [实线长度, 间隙长度]
+        ctx.setLineDash([30, 5]);
+        // 偏移量 可以修改虚线的移动 使其更好看一点
+        ctx.lineDashOffset = 10;
+        ctx.strokeRect(50, 50, 150, 150);
+    }
+</script>

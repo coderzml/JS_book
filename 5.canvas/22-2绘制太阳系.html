@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+
+    }
+
+    body {
+      background-color: #000;
+    }
+
+    canvas {
+      width: 100%;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas width="300" height="300">您的浏览器不支持canvas</canvas>
+</body>
+
+</html>
+<script>
+  // 太阳
+  let sun;
+  // 地球
+  let earth;
+  // 月亮
+  let moon;
+  // 初始化
+  function init() {
+    // create img
+    sun = new Image();
+    earth = new Image();
+    moon = new Image();
+    // add location
+    sun.src = 'https://mdn.mozillademos.org/files/1456/Canvas_sun.png';
+    moon.src = 'https://mdn.mozillademos.org/files/1443/Canvas_moon.png';
+    earth.src = 'https://mdn.mozillademos.org/files/1429/Canvas_earth.png';
+    // call animate
+    window.requestAnimationFrame(draw);
+  }
+
+  function draw() {
+
+
+    // get Element
+    let canvas = document.querySelector('canvas');
+    if (canvas.getContext) {
+      let ctx = canvas.getContext('2d');
+      //  设置新画的在后画的之前 set new draw is old draw before
+      ctx.globalCompositeOperation = 'destination-over';
+      // 做动画的第一步 (do animate the first step) clear canvas
+      ctx.clearRect(0, 0, 500, 500);
+      // 定义颜色   set color
+      ctx.fillStyle = 'rgba(0,0,0,0.4)';
+      ctx.strokeStyle = 'rgba(0,153,255,0.4)';
+      // 保存 save
+      ctx.save();
+      // 移动坐标位置 move X&Y location
+      ctx.translate(150, 150);
+      // draw earth
+      // 获取日期对象 get date object
+      var time = new Date();
+      ctx.rotate(((2 * Math.PI) / 60) * time.getSeconds() + ((2 * Math.PI) / 60000) * time.getMilliseconds());
+      // 再次改变坐标位置
+      ctx.translate(105, 0);
+      // 地球的边框
+      ctx.beginPath();
+      ctx.arc(0, 0, 29, 0, Math.PI * 2, false);
+      // ctx.fillRect(0, -12, 50, 24); //shadow
+      ctx.stroke();
+      // hide earth
+      ctx.drawImage(earth, -12, -12);
+
+      // moon
+      ctx.save();
+      ctx.rotate(((2 * Math.PI) / 6) * time.getSeconds() + ((2 * Math.PI) / 6000) * time.getMilliseconds());
+      // 改变位置
+      ctx.translate(0, 28.5);
+      // 月球出现
+      ctx.drawImage(moon, -3.5, -3.5);
+      ctx.restore();
+      ctx.restore();
+      // 画线
+      ctx.beginPath();
+      // 在中心的位置 半径是105 画个圆框
+      ctx.arc(150, 150, 105, 0, Math.PI * 2, false);
+      ctx.stroke();
+      // 显示太阳 5个参数代表大小 
+      ctx.drawImage(sun, 0, 0, 300, 300);
+      // 做动画
+      window.requestAnimationFrame(draw);
+    }
+  }
+  init();
+</script>

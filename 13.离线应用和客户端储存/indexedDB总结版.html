@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button class="addData">添加数据</button>
+  <button class="reayData">读取数据</button>
+  <button class="show_all_object">遍历对象——打印所有对象</button>
+  <button class="show_some_object">遍历对象——打印指定对象</button>
+  <button class="upload">更新数据</button>
+  <button class="removeLoad">删除指定数据</button>
+  <button class="use_index_find_data">使用索引查找数据</button>
+  <button class="clear">清除全部数据</button>
+</body>
+
+</html>
+<script>
+  let data = [
+    {
+      id: 1,
+      name: "张梦龙",
+      age: "18",
+      sex: "男"
+    }, {
+      id: 2,
+      name: "李畅畅",
+      age: "19",
+      sex: "女"
+    }, {
+      id: 3,
+      name: "王留涛",
+      age: "20",
+      sex: "男"
+    }, {
+      id: 4,
+      name: "李龙",
+      age: "19",
+      sex: "男"
+    }, {
+      id: 5,
+      name: "陈贺方",
+      age: "20",
+      sex: "男"
+    }, {
+      id: 6,
+      name: "王东杰",
+      age: "19",
+      sex: "男"
+    }, {
+      id: 7,
+      name: "刘家豪",
+      age: "18",
+      sex: "男"
+    }, {
+      id: 8,
+      name: "于雪凤",
+      age: "19",
+      sex: "男"
+    }, {
+      id: 9,
+      name: "张一博",
+      age: "19",
+      sex: "男"
+    }, {
+      id: 10,
+      name: "田祥雨",
+      age: "19",
+      sex: "男"
+    }
+  ];
+
+
+  // 渲染数据
+  function loadElement() {
+
+    //   let names = ['id', 'name', 'age', 'sex'];
+    //   for (let i = 0; i < names.length; i++) {
+    //     let ul = document.createElement('ul');
+    //     for (let j = 0; j < data.length; j++) {
+    //       let li = document.createElement('li');
+    //       console.log(names[i]); // 打印的是一个字符串  id 数据 而是字符串 
+    //       li.innerHTML = data[j].names[i];
+
+    //       ul.appendChild(li);
+    //     }
+    //     document.body.appendChild(ul);
+    //   }
+    // }
+
+    let ul = document.createElement('ul');
+    for (let i = 0; i < data.length; i++) {
+      let li = document.createElement('li');
+      li.innerHTML = data[i].age;
+      ul.appendChild(li);
+    }
+    document.body.appendChild(ul);
+  }
+  loadElement();
+  // 第一步创建（打开）数据库并监听事件
+  // 兼容写法
+  let indexedDB = window.indexedDB || window.msIndexedDB || window.mozIndexedDB || window.webkitIndexedDB;
+  // 使用indexedDB.open创建数据库，如果数据库已经存在 那么会打开他，如果不存在就是创建在打开
+  let request = indexedDB.open('ClassInfo');
+  let db = null;  // 用来存数据
+  // 创建成功后可以拿三个事件监听
+  // 创建失败
+  request.onerror = function () {
+    console.log('服务器创建失败');
+  }
+  // 创建成功
+  request.onsuccess = function (event) {
+    // 如果数据库创建成功那么数据就在 event.target.result
+    console.log('服务器创建成功');
+    db = event.target.result;
+  }
+  // 数据库版本升级事件 第一般第一次创建数据库都会执行这个事件
+  request.onupgradeneeded = function (event) {
+    // 同样传输数据  因为第一次创建数据库 会先执行此事件
+    db = event.target.result;
+    // 第二步、创建仓库（创建表）
+    //  先检测 是否存在 再创建
+    let objectStore;
+    if (!db.objectStoreNames.contains('classmateInfo')) {
+      objectStore = db.createObjectStore('classmateInfo', { keyPath: "id", autoIncrement: true });
+      // 第一个参数是 表的名字，第二个参数是个对象 keyPath是谁作为主键（每条数据中都要有一个主键）第二个参数是 是否自动增加主键值 在保存的数据中可以看到
+      // 到此数据库和对象仓库（表） 都已经创建成功啦
+    }
+    // 设置索引
+    objectStore.createIndex('classmateInfoName', 'name', { unique: false });
+    // 第一个参数是 索引的名 第二个参数是数据的名，第三个参数是可选参数，值为一个js对象，该对象中的 unique 属性值为true，代表该索引值是唯一的，不可以相同的。如果为false的话，则可以相同
+  }
+  // 第三步、添加数据
+  let addData = document.querySelector('.addData');
+  addData.onclick = function () {
+    let request;
+    // 利用循环把数据全部添加 
+    for (let i = 0; i < data.length; i++) {
+      request = db.transaction(['classmateInfo'], 'readwrite').objectStore('classmateInfo').add(data[i])
+    }
+    // db.transaction(['classmateInfo']'readwrite')是选择数据库对象，第一个参数是 对象仓库名 第二个参数是 模式，只读和读写和数据库 版本变化  分别是 1. readOnly: 只读    2. readwrite: 可读可写3. versionchange: 数据库版本变化
+    // objectStore('classmateInfo') 是拿到仓库对象 再使用add方法添加，add方法添加第一次 如果数据不存在则会添加，如果数据存在则会到request.onerror里。使用put代表修改，则不会报错
+    // 因为是异步添加 所以可以用 onerror和onsuccess检测
+    request.onerror = function () {
+      console.log('数据添加失败');
+    }
+    request.onsuccess = function () {
+      console.log('数据添加成功');
+    }
+  }
+  // 读取数据
+  let reayData = document.querySelector('.reayData');
+  reayData.onclick = function () {
+    let request = db.transaction(['classmateInfo'], 'readwrite').objectStore('classmateInfo').get(2);
+    // get(2); 方法是读取的意思  参数是 上面设置的主键id 
+    request.onerror = function () {
+      console.log('读取数据失败');
+    }
+    // 读取成功就会触发事件 数据在event.target.result里
+    request.onsuccess = function (event) {
+      console.log('读取数据成功');
+      console.log(event.target.result);
+    }
+  }
+  // 遍历对象
+  // 遍历所有对象
+  let show_all_object = document.querySelector('.show_all_object');
+  show_all_object.onclick = function () {
+    let request = db.transaction(['classmateInfo'], 'readwrite').objectStore('classmateInfo');
+    // 如果openCursor没有参数 代表遍历所有数据
+    let req = request.openCursor();
+    let arrs = [];
+    req.onsuccess = function (event) {
+      let data = event.target.result;
+      if (data) {
+        // 数据在 data.value 中
+        arrs.push(data.value);
+        data.continue();
+        //  data.continue();代表继续往下迭代
+      } else {
+        // else代表data内数据遍历完毕
+        console.log(arrs);
+      }
+    }
+    req.onerror = function () {
+      console.log('遍历数据失败');
+    }
+  }
+  // 遍历指定对象
+  let show_some_object = document.querySelector('.show_some_object');
+  show_some_object.onclick = function () {
+    let request = db.transaction(['classmateInfo'], 'readwrite').objectStore('classmateInfo');
+    // 设置范围
+    let range = IDBKeyRange.bound(1, 5);
+    let req = request.openCursor(range, 'next');
+    // openCursor 的第一个参数是 设置的范围 第二个参数是显示模式，正序还是倒叙 具体更加详细的介绍在文档中
+    let arrs = [];
+    req.onsuccess = function (event) {
+      let data = event.target.result;
+      if (data) {
+        // 数据在 data.value 中
+        arrs.push(data.value);
+        data.continue();
+        //  data.continue();代表继续往下迭代
+      } else {
+        // else代表data内数据遍历完毕
+        console.log(arrs);
+      }
+    }
+    req.onerror = function () {
+      console.log('遍历数据失败');
+    }
+  }
+  // 更新数据
+  let upload = document.querySelector('.upload');
+  upload.onclick = function () {
+    // 可以先获取数据
+    let request = db.transaction(['classmateInfo'], 'readwrite').objectStore('classmateInfo').get(1);
+    request.onerror = function () {
+      // console.log('读取数据失败');
+    }
+    request.onsuccess = function (event) {
+      // console.log('读取数据成功');
+      // console.log(event.target.result);
+      // 获取数据
+      let olddata = event.target.result;
+      // 设置新数据
+      let newdata = olddata.age = '20';
+      // 完成修改 再提交数据
+      console.log(olddata);
+      let req = db.transaction(['classmateInfo'], 'readwrite').objectStore('classmateInfo').put(olddata);
+      req.onsuccess = function (event) {
+        console.log('数据更新成功');
+      }
+      req.onerror = function (event) {
+        console.log('数据更新失败');
+      }
+    }
+  }
+  // 删除指定数据
+  let removeLoad = document.querySelector('.removeLoad');
+  removeLoad.onclick = function () {
+    let request = db.transaction(['classmateInfo'], 'readwrite').objectStore('classmateInfo').delete(1);
+    request.onerror = function () {
+      console.log('删除数据失败');
+    }
+    request.onsuccess = function (event) {
+      console.log('删除数据成功');
+    }
+  }
+  // 查找索引
+  // classmateInfoName
+  let use_index_find_data = document.querySelector('.use_index_find_data');
+  use_index_find_data.onclick = function () {
+    let range = IDBKeyRange.only('张梦龙');
+    let request = db.transaction(['classmateInfo'], 'readwrite').objectStore('classmateInfo').index('classmateInfoName').openCursor(range);
+    request.onsuccess = function (event) {
+      console.log(event.target.result);
+      // 此时已经报错了 提示找不到索引 但是代码继续写下去 去处理如果找到后的结果 
+      let data = event.target.result;
+      let arrs = [];
+      if (data) {
+        // data.value 这里不确定 要不要加value
+        arrs.push(data.value);
+        data.continue();
+      } else {
+        console.log(arrs);
+      }
+    };
+    request.onerror = function () {
+      console.log('找不到索引和报错是两个概念');
+    }
+  }
+  // 清除全部内容
+  let clear = document.querySelector('.clear');
+  clear.onclick = function () {
+    let request = db.transaction(['classmateInfo'], 'readwrite').objectStore('classmateInfo').clear();
+    request.onsuccess = function (event) {
+      console.log('内容已全部清除');
+      console.log(event.target.result); // 返回 undefined
+    }
+    request.onerror = function (event) {
+      console.log('内容清除失败');
+    }
+  }
+</script>

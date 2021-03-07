@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas width="400px" height="400px"></canvas>
+    <img src="./1.png" alt="">
+</body>
+
+</html>
+<script>
+    // 如果不写widow.onload 就会出现 跨域问题
+    window.onload = function () {
+        let canvas = document.querySelector('canvas');
+        if (canvas.getContext) {
+            let ctx = canvas.getContext('2d');
+            // 绘制原始图像
+            let img = document.querySelector('img');
+            ctx.drawImage(img, 0, 0);
+            // 取得图像数据 参数是：获取图像的XY 和获取图像的宽高
+            let imageData = ctx.getImageData(0, 0, img.width, img.height);
+            console.log(imageData);
+            // getImageData 返回的三个属性 width heigth data  其中data里面保存的就是颜色的值
+            let data = imageData.data;
+            // 循环data里的数据 
+            // 因为data里的颜色数据 保存的 是红绿蓝和透明度 所以4个一循环 
+            let red, green, blue, alpha, average;
+            for (let i = 0; i < data.length; i += 4) {
+                red = data[i];
+                green = data[i + 1];
+                blue = data[i + 2];
+                alpha = data[i + 3];
+                // 求出rgb的平均值
+                average = Math.floor((red + green + blue) / 3);
+                // 设置颜色值,透明度不变 就不用设置了
+                data[i] = average;
+                data[i + 1] = average;
+                data[i + 2] = average;
+            }
+            // 回写图片数据
+            imageData.data = data;
+            ctx.putImageData(imageData, 0, 0);
+        }
+    }
+</script>
